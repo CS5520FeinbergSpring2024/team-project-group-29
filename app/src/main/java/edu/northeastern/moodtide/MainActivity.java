@@ -18,10 +18,16 @@ public class MainActivity extends AppCompatActivity {
 
         addEntry = (ImageView) findViewById(R.id.nav_home);
         addEntry.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MainActivity.this, SelectionActivity.class);
+//                startActivity(intent);
+//            }
+
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SelectionActivity.class);
-                startActivity(intent);
+            public void onClick(View view) {
+                Intent intent_select_trigger = new Intent(MainActivity.this, SelectTrigger.class);
+                startActivity(intent_select_trigger);
             }
         });
     }

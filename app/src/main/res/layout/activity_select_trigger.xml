@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SelectTrigger">
+    <include
+        android:id="@+id/selection_top"
+        layout="@layout/selection_top">
+
+    </include>
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/flexlayout_triggers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:flexWrap="wrap"
+        app:layout_constraintTop_toBottomOf="@+id/selection_top"
+        android:layout_marginTop="12dp"
+        >
+
+    </com.google.android.flexbox.FlexboxLayout>
+    <Button
+        android:id="@+id/button_add_trigger"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add a trigger"
+        app:layout_constraintTop_toBottomOf="@+id/flexlayout_triggers"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
+
+    </Button>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
