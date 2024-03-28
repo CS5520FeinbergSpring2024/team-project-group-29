@@ -1,16 +1,15 @@
-package edu.northeastern.moodtide;
+package edu.northeastern.moodtide.addEntry;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import edu.northeastern.moodtide.R;
 import edu.northeastern.moodtide.shapes.CircleMain;
 
 public class SelectionActivity extends AppCompatActivity {

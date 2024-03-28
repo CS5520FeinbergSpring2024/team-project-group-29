@@ -1,4 +1,4 @@
-package edu.northeastern.moodtide;
+package edu.northeastern.moodtide.addEntry;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +13,7 @@ import com.google.android.flexbox.FlexboxLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.northeastern.moodtide.R;
 import edu.northeastern.moodtide.object.Trigger;
 
 public class SelectTrigger extends AppCompatActivity {

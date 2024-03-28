@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import edu.northeastern.moodtide.addEntry.SelectionActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     ImageView addEntry;

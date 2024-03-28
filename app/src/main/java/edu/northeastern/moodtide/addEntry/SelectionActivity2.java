@@ -1,4 +1,4 @@
-package edu.northeastern.moodtide;
+package edu.northeastern.moodtide.addEntry;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import java.text.BreakIterator;
 
+import edu.northeastern.moodtide.R;
 import edu.northeastern.moodtide.shapes.CircleMain;
 
 public class SelectionActivity2 extends AppCompatActivity {
