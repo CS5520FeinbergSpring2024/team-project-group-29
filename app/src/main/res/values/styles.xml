@@ -1,5 +1,13 @@
 <resources>
 
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Other theme attributes -->
+        <item name="colorPrimary">@color/ocean_theme</item>
+        <item name="colorPrimaryDark">@color/ocean_theme</item>
+        <item name="colorAccent">@color/aqua_theme</item>
+        <item name="android:windowBackground">#FFFFFF</item> <!-- Set the background color here -->
+    </style>
+
     <!-- Style for TriggerTextViews with a border. -->
     <style name="TextViewWithBorder">
         <item name="android:layout_width">wrap_content</item>

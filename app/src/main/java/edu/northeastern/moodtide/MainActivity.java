@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Intent intent_select_trigger = new Intent(MainActivity.this, SelectTrigger.class);
+                Intent intent_select_trigger = new Intent(MainActivity.this, SelectionActivity.class);
                 startActivity(intent_select_trigger);
             }
         });

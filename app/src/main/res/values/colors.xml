@@ -2,4 +2,21 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="orange_theme">#F4B59D</color>
+    <color name="yellow_theme">#F5EE9B</color>
+    <color name="yellow1">#faf5c9</color>
+    <color name="yellow2">#f9f1c6</color>
+    <color name="yellow3">#f8edc3</color>
+    <color name="yellow4">#f8e9bf</color>
+    <color name="yellow5">#f7e5bc</color>
+    <color name="yellow6">#f6e1b9</color>
+    <color name="yellow7">#f5deb6</color>
+    <color name="yellow8">#f5dab3</color>
+    <color name="yellow9">#f4d6b0</color>
+    <color name="yellow10">#f3d2ad</color>
+
+    <color name="green_theme">#C3DEA7</color>
+    <color name="aqua_theme">#BBE2E4</color>
+    <color name="ocean_theme">#B4BBE0</color>
+    <color name="pink_theme">#E793B5</color>
 </resources>
