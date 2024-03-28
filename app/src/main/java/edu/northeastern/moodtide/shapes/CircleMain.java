@@ -135,7 +135,11 @@ public class CircleMain extends View {
                     String touchedSectorText = sectorTexts[touchedSectorIndex];
                     // Handle the touched sector here, for example:
                     Log.e("Sector Touched", "Index: " + touchedSectorIndex + ", Text: " + touchedSectorText);
-                    selectedSectorIndex = touchedSectorIndex;
+                    if(selectedSectorIndex == touchedSectorIndex){
+                        selectedSectorIndex=-1;
+                    }else{
+                        selectedSectorIndex = touchedSectorIndex;
+                    }
                     invalidate();
                     return true;
             }

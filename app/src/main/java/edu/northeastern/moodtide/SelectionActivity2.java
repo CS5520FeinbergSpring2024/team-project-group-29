@@ -6,6 +6,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import java.text.BreakIterator;
+
 import edu.northeastern.moodtide.shapes.CircleMain;
 
 public class SelectionActivity2 extends AppCompatActivity {
@@ -49,13 +51,39 @@ public class SelectionActivity2 extends AppCompatActivity {
         test=(TextView) findViewById(R.id.testView);
         test.setText(currentCategory);
 
+        switch(currentCategory){
+            case "Anger":
+                drawPlate(NUM_ANGER,COLORS_ANGER,TITLES_ANGER);
+                break;
+
+            case "Joy":
+                drawPlate(NUM_JOY,COLORS_JOY,TITLES_JOY);
+                break;
+
+            case "Love":
+                drawPlate(NUM_LOVE,COLORS_LOVE,TITLES_LOVE);
+                break;
+
+            case "Surprise":
+                drawPlate(NUM_SURPRISE,COLORS_SURPRISE,TITLES_SURPRISE);
+                break;
+
+            case "Sadness":
+                drawPlate(NUM_SADNESS,COLORS_SADNESS,TITLES_SADNESS);
+                break;
+
+            case "Fear":
+                drawPlate(NUM_FEAR,COLORS_FEAR,TITLES_FEAR);
+
+        }
+
 
 
 
     }
     private void drawPlate(int count, int[] colors, String[] texts){
         CircleMain current = new CircleMain(this, count, colors, texts);
-        ConstraintLayout constraintLayout = findViewById(R.id.selection_main);
+        ConstraintLayout constraintLayout = findViewById(R.id.selection_sub);
         constraintLayout.addView(current);
     }
 }
