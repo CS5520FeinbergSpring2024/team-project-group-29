@@ -52,9 +52,4 @@ public class SelectionActivity extends AppCompatActivity {
         finish();
     }
 
-    private void drawPlate(int count, int[] colors, String[] texts){
-        CircleMain current = new CircleMain(this, count, colors, texts);
-        ConstraintLayout constraintLayout = findViewById(R.id.selection_main);
-        constraintLayout.addView(current);
-    }
 }
