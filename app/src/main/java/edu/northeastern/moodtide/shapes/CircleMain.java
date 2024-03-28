@@ -103,41 +103,54 @@ public class CircleMain extends View {
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
-        float centerX = getWidth() / 2f;
-        float centerY = getHeight() / 2f;
-        float touchedAngle = (float) Math.toDegrees(Math.atan2(y - centerY, x - centerX));
-        Log.e("Touched Angle",String.valueOf(touchedAngle));
-        Log.e("Rotation",String.valueOf(getPositiveRotation()));
+        // Calculate the distance from the touch point to the center of the circle
+        float distanceToCenter = calculateDistance(x, y, getWidth() / 2f, getHeight() / 2f);
+        float radius = calculateRadius();
+        if (distanceToCenter <= radius) {
+            float centerX = getWidth() / 2f;
+            float centerY = getHeight() / 2f;
+            float touchedAngle = (float) Math.toDegrees(Math.atan2(y - centerY, x - centerX));
+            Log.e("Touched Angle",String.valueOf(touchedAngle));
+            Log.e("Rotation",String.valueOf(getPositiveRotation()));
 
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                mLastTouchAngle = touchedAngle;
-                Log.e("DOWN",String.valueOf(mLastTouchAngle));
-                return true;
-            case MotionEvent.ACTION_MOVE:
-                float deltaAngle = touchedAngle - mLastTouchAngle;
-                setRotation(getRotation() + deltaAngle);
-                mLastTouchAngle = touchedAngle;
-                Log.e("MOVE",String.valueOf(deltaAngle));
-                return true;
-            case MotionEvent.ACTION_UP:
-                float sectorAngle = 360f / numSectors;
-                // Calculate the angle of the touch relative to the start angle of the sectors
-                float selectAngle = (360 + touchedAngle) % 360;
-                Log.e("UP",String.valueOf(selectAngle));
-                // Calculate the touched sector index
-                int touchedSectorIndex = (int) (selectAngle / sectorAngle);
-                // Get the corresponding sector text
-                String touchedSectorText = sectorTexts[touchedSectorIndex];
-                // Handle the touched sector here, for example:
-                Log.e("Sector Touched", "Index: " + touchedSectorIndex + ", Text: " + touchedSectorText);
-                selectedSectorIndex = touchedSectorIndex;
-                invalidate();
-                return true;
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    mLastTouchAngle = touchedAngle;
+                    Log.e("DOWN",String.valueOf(mLastTouchAngle));
+                    return true;
+                case MotionEvent.ACTION_MOVE:
+                    float deltaAngle = touchedAngle - mLastTouchAngle;
+                    setRotation(getRotation() + deltaAngle);
+                    mLastTouchAngle = touchedAngle;
+                    Log.e("MOVE",String.valueOf(deltaAngle));
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    float sectorAngle = 360f / numSectors;
+                    // Calculate the angle of the touch relative to the start angle of the sectors
+                    float selectAngle = (360 + touchedAngle) % 360;
+                    Log.e("UP",String.valueOf(selectAngle));
+                    // Calculate the touched sector index
+                    int touchedSectorIndex = (int) (selectAngle / sectorAngle);
+                    // Get the corresponding sector text
+                    String touchedSectorText = sectorTexts[touchedSectorIndex];
+                    // Handle the touched sector here, for example:
+                    Log.e("Sector Touched", "Index: " + touchedSectorIndex + ", Text: " + touchedSectorText);
+                    selectedSectorIndex = touchedSectorIndex;
+                    invalidate();
+                    return true;
+            }
+            return super.onTouchEvent(event);
         }
-        return super.onTouchEvent(event);
+        return false;
     }
     public int getSelection(){
         return selectedSectorIndex;
+    }
+    private float calculateDistance(float x1, float y1, float x2, float y2) {
+        return (float) Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    }
+
+    private float calculateRadius() {
+        return Math.min(getWidth(), getHeight()) / 2f-20;
     }
 }
