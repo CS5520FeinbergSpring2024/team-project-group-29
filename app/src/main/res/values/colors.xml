@@ -82,4 +82,6 @@
     <color name="pink8">#e7a8c9</color>
     <color name="pink9">#dba6c7</color>
     <color name="pink10">#cfa5c4</color>
+
+    <color name="selected_trigger_highlighted_border">#D3D3D3</color>
 </resources>
