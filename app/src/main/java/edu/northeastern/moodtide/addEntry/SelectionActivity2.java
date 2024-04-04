@@ -21,8 +21,9 @@ public class SelectionActivity2 extends AppCompatActivity implements CircleMain.
 
     private CircleMain current;
     String currentCategory, currentEmotion;
-    TextView title, explanation;
-    ImageButton next;
+    int  currentColor;
+    TextView currentStep, title, explanation;
+    ImageButton backBtn, next;
     CardView card;
 
     private static final int NUM_ANGER = 10, NUM_JOY = 16, NUM_LOVE = 10, NUM_SURPRISE = 10, NUM_SADNESS = 12, NUM_FEAR = 10;
@@ -57,6 +58,16 @@ public class SelectionActivity2 extends AppCompatActivity implements CircleMain.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selection2);
 
+        backBtn=(ImageButton)findViewById(R.id.button_back_arrow);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackButtonClick(v);
+            }
+        });
+        currentStep=(TextView)findViewById(R.id.text_current_step);
+        currentStep.setText("2");
+
         card = (CardView)findViewById(R.id.emotionCardView);
         title = (TextView) findViewById(R.id.titleTextView);
         explanation = (TextView) findViewById(R.id.explanationTextView);
@@ -67,6 +78,7 @@ public class SelectionActivity2 extends AppCompatActivity implements CircleMain.
                 Intent nextPage = new Intent(SelectionActivity2.this, SelectTrigger.class);
                 nextPage.putExtra("category",currentCategory);
                 nextPage.putExtra("emotion",currentEmotion);
+                nextPage.putExtra("color",currentColor);
                 startActivity(nextPage);
             }
         });
@@ -126,16 +138,22 @@ public class SelectionActivity2 extends AppCompatActivity implements CircleMain.
     }
 
     @Override
-    public void onSectorSelected(int sectorIndex, String sectorTitle) {
+    public void onSectorSelected(int sectorIndex, String sectorTitle, int selectedColor) {
         if(sectorIndex==-1){
             card.setVisibility(View.INVISIBLE);
         }else{
             currentEmotion = sectorTitle;
+            currentColor = selectedColor;
             title.setText(sectorTitle);
             int resourceId = getResources().getIdentifier(sectorTitle, "string", getPackageName());
             explanation.setText(getResources().getString(resourceId));
+            card.setCardBackgroundColor(selectedColor);
+            next.setBackgroundColor(selectedColor);
             card.setVisibility(View.VISIBLE);
         }
 
+    }
+    public void onBackButtonClick(View view) {
+        finish();
     }
 }

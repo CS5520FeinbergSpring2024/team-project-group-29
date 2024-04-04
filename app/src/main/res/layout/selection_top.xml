@@ -31,7 +31,7 @@
             android:id="@+id/text_total_step"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="/9"
+            android:text="/4"
             android:textSize="35sp">
 
         </TextView>

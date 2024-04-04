@@ -23,6 +23,7 @@ public class CircleMain extends View {
     private float mLastTouchAngle;
     private int selectedSectorIndex = -1;
     String sectorTitle ="";
+    int selectedColor= -1;
     private OnSectorSelectedListener listener;
 
     public CircleMain(Context context, int numSectors, int[] sectorColors,String[] sectorTexts) {
@@ -148,10 +149,11 @@ public class CircleMain extends View {
                     }else{
                         selectedSectorIndex = touchedSectorIndex;
                         sectorTitle = sectorTexts[selectedSectorIndex];
+                        selectedColor = sectorColors[selectedSectorIndex];
                     }
                     invalidate();
                     if (listener != null) {
-                        listener.onSectorSelected(selectedSectorIndex, sectorTitle);
+                        listener.onSectorSelected(selectedSectorIndex, sectorTitle, selectedColor);
                     }
                     return true;
             }
@@ -171,7 +173,7 @@ public class CircleMain extends View {
     }
 
     public interface OnSectorSelectedListener {
-        void onSectorSelected(int sectorIndex, String sectorTitle);
+        void onSectorSelected(int sectorIndex, String sectorTitle, int selectedColor);
     }
 
     public float getCurrentRotationAngle() {
@@ -186,6 +188,7 @@ public class CircleMain extends View {
         // Implement logic to set the selected sector index
         selectedSectorIndex = index;
         sectorTitle=sectorTexts[selectedSectorIndex];
+        selectedColor=sectorColors[selectedSectorIndex];
         invalidate(); // Trigger redraw with updated selection
     }
 
@@ -211,7 +214,7 @@ public class CircleMain extends View {
             // Restore the selected sector index
             setSelectedSectorIndex(bundle.getInt("selectedSectorIndex"));
             if (listener != null) {
-                listener.onSectorSelected(selectedSectorIndex, sectorTitle);
+                listener.onSectorSelected(selectedSectorIndex, sectorTitle, selectedColor);
             }
         } else {
             super.onRestoreInstanceState(state);

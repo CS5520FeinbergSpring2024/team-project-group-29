@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,8 @@ public class SelectionActivity extends AppCompatActivity {
 
     ImageButton backBtn, forwardBtn;
     CircleMain mainSelect;
+    TextView currentStep;
+    View topBar;
 
     private static final int NUM_SECTORS = 6;
     private static final int[] SECTOR_COLORS = {R.color.pink_theme, R.color.orange_theme,R.color.yellow_theme,R.color.green_theme,R.color.aqua_theme,R.color.ocean_theme};
@@ -26,7 +29,17 @@ public class SelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selection);
 
-        backBtn=(ImageButton)findViewById(R.id.button_back);
+        //topBar = findViewById(R.id.selection_top);
+
+        backBtn=(ImageButton)findViewById(R.id.button_back_arrow);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackButtonClick(v);
+            }
+        });
+        currentStep=(TextView)findViewById(R.id.text_current_step);
+        currentStep.setText("1");
         forwardBtn=(ImageButton)findViewById(R.id.button_forward);
 
         mainSelect = new CircleMain(this, NUM_SECTORS, SECTOR_COLORS,SECTOR_TITLES);
@@ -54,6 +67,7 @@ public class SelectionActivity extends AppCompatActivity {
     public void onBackButtonClick(View view) {
         finish();
     }
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

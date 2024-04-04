@@ -7,6 +7,18 @@
     tools:context=".addEntry.SelectionActivity2"
     android:id="@+id/selection_sub">
 
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/selection_top"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        layout="@layout/selection_top">
+
+    </include>
+
     <androidx.cardview.widget.CardView
         android:id="@+id/emotionCardView"
         android:layout_width="0dp"
@@ -56,6 +68,7 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/back_arrow"
+                android:background="@color/white"
                 android:contentDescription="next_arrow"
                 android:rotation="180"/>
 
