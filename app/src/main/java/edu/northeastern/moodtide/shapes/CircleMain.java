@@ -20,6 +20,8 @@ public class CircleMain extends View {
     private Paint textPaint;
     private float mLastTouchAngle;
     private int selectedSectorIndex = -1;
+    String sectorTitle ="";
+    private OnSectorSelectedListener listener;
 
     public CircleMain(Context context, int numSectors, int[] sectorColors,String[] sectorTexts) {
         super(context);
@@ -91,6 +93,10 @@ public class CircleMain extends View {
 
     }
 
+    public void setOnSectorSelectedListener(OnSectorSelectedListener listener) {
+        this.listener = listener;
+    }
+
     private float getPositiveRotation() {
         float angle = getRotation() % 360;
         if (angle < 0) {
@@ -139,8 +145,12 @@ public class CircleMain extends View {
                         selectedSectorIndex=-1;
                     }else{
                         selectedSectorIndex = touchedSectorIndex;
+                        sectorTitle = sectorTexts[selectedSectorIndex];
                     }
                     invalidate();
+                    if (listener != null) {
+                        listener.onSectorSelected(selectedSectorIndex, sectorTitle);
+                    }
                     return true;
             }
             return super.onTouchEvent(event);
@@ -156,5 +166,9 @@ public class CircleMain extends View {
 
     private float calculateRadius() {
         return Math.min(getWidth(), getHeight()) / 2f-20;
+    }
+
+    public interface OnSectorSelectedListener {
+        void onSectorSelected(int sectorIndex, String sectorTitle);
     }
 }

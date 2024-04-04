@@ -1,20 +1,27 @@
 package edu.northeastern.moodtide.addEntry;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.text.BreakIterator;
 
+import edu.northeastern.moodtide.MainActivity;
 import edu.northeastern.moodtide.R;
 import edu.northeastern.moodtide.shapes.CircleMain;
 
-public class SelectionActivity2 extends AppCompatActivity {
+public class SelectionActivity2 extends AppCompatActivity implements CircleMain.OnSectorSelectedListener{
 
-    String currentCategory;
-    TextView test;
+    String currentCategory, currentEmotion;
+    TextView title, explanation;
+    ImageButton next;
+    CardView card;
 
     private static final int NUM_ANGER = 10, NUM_JOY = 16, NUM_LOVE = 10, NUM_SURPRISE = 10, NUM_SADNESS = 12, NUM_FEAR = 10;
     private static final int[] COLORS_ANGER = {R.color.pink1, R.color.pink2,R.color.pink3,R.color.pink4,
@@ -36,7 +43,7 @@ public class SelectionActivity2 extends AppCompatActivity {
             "Illustrious","Triumphant","Blissful","Jovial","Delighted","Amused","Satisfied","Pleased"};
     private static final String[] TITLES_LOVE = {"Peaceful","Relieved","Compassionate","Caring","Infatuation","Passion","Attracted",
             "Sentimental","Fondness","Romantic"};
-    private static final String[] TITLES_SURPRISE = {"Shocked","Dismayed","Disillusioned","Perplexed","Astonished","Awe-struck","Speechless",
+    private static final String[] TITLES_SURPRISE = {"Shocked","Stunned","Disillusioned","Perplexed","Astonished","Awestruck","Speechless",
             "Astounded","Stimulated","Touched"};
     private static final String[] TITLES_SADNESS = {"Agony","Hurt","Depressed","Sorrow","Dismayed","Displeased","Regretful","Guilty","Isolated",
             "Lonely","Grief","Powerless"};
@@ -48,9 +55,22 @@ public class SelectionActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selection2);
 
+        card = (CardView)findViewById(R.id.emotionCardView);
+        title = (TextView) findViewById(R.id.titleTextView);
+        explanation = (TextView) findViewById(R.id.explanationTextView);
+        next = (ImageButton) findViewById(R.id.toTriggerButton);
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent nextPage = new Intent(SelectionActivity2.this, SelectTrigger.class);
+                nextPage.putExtra("category",currentCategory);
+                nextPage.putExtra("emotion",currentEmotion);
+                startActivity(nextPage);
+            }
+        });
+        card.setVisibility(View.INVISIBLE);
+
         currentCategory = getIntent().getStringExtra("category");
-        test=(TextView) findViewById(R.id.testView);
-        test.setText(currentCategory);
 
         switch(currentCategory){
             case "Anger":
@@ -81,10 +101,26 @@ public class SelectionActivity2 extends AppCompatActivity {
 
 
 
+
     }
     private void drawPlate(int count, int[] colors, String[] texts){
         CircleMain current = new CircleMain(this, count, colors, texts);
         ConstraintLayout constraintLayout = findViewById(R.id.selection_sub);
         constraintLayout.addView(current);
+        current.setOnSectorSelectedListener(this);
+    }
+
+    @Override
+    public void onSectorSelected(int sectorIndex, String sectorTitle) {
+        if(sectorIndex==-1){
+            card.setVisibility(View.INVISIBLE);
+        }else{
+            currentEmotion = sectorTitle;
+            title.setText(sectorTitle);
+            int resourceId = getResources().getIdentifier(sectorTitle, "string", getPackageName());
+            explanation.setText(getResources().getString(resourceId));
+            card.setVisibility(View.VISIBLE);
+        }
+
     }
 }

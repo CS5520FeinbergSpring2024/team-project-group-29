@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         selectTriggerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent selectTriggerIntent = new Intent(MainActivity.this, SelectTrigger.class);
+                Intent selectTriggerIntent = new Intent(MainActivity.this, SelectionActivity.class);
                 startActivity(selectTriggerIntent);
             }
         });
