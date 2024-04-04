@@ -7,20 +7,26 @@
     tools:context=".addEntry.SelectionActivity2"
     android:id="@+id/selection_sub">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/emotionCardView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.8"
         app:cardCornerRadius="20dp"
         app:cardElevation="4dp"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="30dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp">
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="30dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
