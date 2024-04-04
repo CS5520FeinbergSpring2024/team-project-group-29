@@ -15,6 +15,7 @@ import edu.northeastern.moodtide.shapes.CircleMain;
 public class SelectionActivity extends AppCompatActivity {
 
     ImageButton backBtn, forwardBtn;
+    CircleMain mainSelect;
 
     private static final int NUM_SECTORS = 6;
     private static final int[] SECTOR_COLORS = {R.color.pink_theme, R.color.orange_theme,R.color.yellow_theme,R.color.green_theme,R.color.aqua_theme,R.color.ocean_theme};
@@ -28,7 +29,7 @@ public class SelectionActivity extends AppCompatActivity {
         backBtn=(ImageButton)findViewById(R.id.button_back);
         forwardBtn=(ImageButton)findViewById(R.id.button_forward);
 
-        CircleMain mainSelect = new CircleMain(this, NUM_SECTORS, SECTOR_COLORS,SECTOR_TITLES);
+        mainSelect = new CircleMain(this, NUM_SECTORS, SECTOR_COLORS,SECTOR_TITLES);
         ConstraintLayout constraintLayout = findViewById(R.id.selection_main);
         constraintLayout.addView(mainSelect);
 
@@ -45,10 +46,27 @@ public class SelectionActivity extends AppCompatActivity {
                 }
             }
         });
+        if (savedInstanceState != null) {
+            onRestoreInstanceState(savedInstanceState);
+        }
     }
 
     public void onBackButtonClick(View view) {
         finish();
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mainSelect != null) {
+            outState.putParcelable("circleViewState", mainSelect.onSaveInstanceState());
+        }
+    }
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (mainSelect != null) {
+            mainSelect.onRestoreInstanceState(savedInstanceState.getParcelable("circleViewState"));
+        }
     }
 
 }

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -170,5 +172,49 @@ public class CircleMain extends View {
 
     public interface OnSectorSelectedListener {
         void onSectorSelected(int sectorIndex, String sectorTitle);
+    }
+
+    public float getCurrentRotationAngle() {
+        return getRotation();
+    }
+
+    public void setRotationAngle(float angle) {
+        setRotation(angle);
+    }
+
+    public void setSelectedSectorIndex(int index) {
+        // Implement logic to set the selected sector index
+        selectedSectorIndex = index;
+        sectorTitle=sectorTexts[selectedSectorIndex];
+        invalidate(); // Trigger redraw with updated selection
+    }
+
+    @Override
+    public Parcelable onSaveInstanceState() {
+        Bundle bundle = new Bundle();
+        // Save the rotation angle
+        bundle.putFloat("rotationAngle", getCurrentRotationAngle());
+        // Save the selected sector index
+        bundle.putInt("selectedSectorIndex", getSelection());
+        // Save the super state
+        bundle.putParcelable("superState", super.onSaveInstanceState());
+        return bundle;
+    }
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        if (state instanceof Bundle) {
+            Bundle bundle = (Bundle) state;
+            // Restore the super state
+            super.onRestoreInstanceState(bundle.getParcelable("superState"));
+            // Restore the rotation angle
+            setRotationAngle(bundle.getFloat("rotationAngle"));
+            // Restore the selected sector index
+            setSelectedSectorIndex(bundle.getInt("selectedSectorIndex"));
+            if (listener != null) {
+                listener.onSectorSelected(selectedSectorIndex, sectorTitle);
+            }
+        } else {
+            super.onRestoreInstanceState(state);
+        }
     }
 }

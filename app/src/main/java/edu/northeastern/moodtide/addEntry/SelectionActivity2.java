@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import edu.northeastern.moodtide.shapes.CircleMain;
 
 public class SelectionActivity2 extends AppCompatActivity implements CircleMain.OnSectorSelectedListener{
 
+    private CircleMain current;
     String currentCategory, currentEmotion;
     TextView title, explanation;
     ImageButton next;
@@ -97,14 +99,27 @@ public class SelectionActivity2 extends AppCompatActivity implements CircleMain.
                 drawPlate(NUM_FEAR,COLORS_FEAR,TITLES_FEAR);
 
         }
-
-
-
-
+        if (savedInstanceState != null) {
+            onRestoreInstanceState(savedInstanceState);
+        }
 
     }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (current != null) {
+            outState.putParcelable("circleViewState", current.onSaveInstanceState());
+        }
+    }
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (current != null) {
+            current.onRestoreInstanceState(savedInstanceState.getParcelable("circleViewState"));
+        }
+    }
     private void drawPlate(int count, int[] colors, String[] texts){
-        CircleMain current = new CircleMain(this, count, colors, texts);
+        current = new CircleMain(this, count, colors, texts);
         ConstraintLayout constraintLayout = findViewById(R.id.selection_sub);
         constraintLayout.addView(current);
         current.setOnSectorSelectedListener(this);
