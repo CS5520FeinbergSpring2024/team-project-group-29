@@ -5,6 +5,7 @@ import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.flexbox.FlexboxLayout;
@@ -53,6 +55,26 @@ public class SelectTrigger extends AppCompatActivity {
 
         // initiate predefined triggers
         initiateDefinedTriggers();
+
+        // forward to next page
+        ImageButton forwardButton = findViewById(R.id.button_forward);
+        forwardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent nextIntent = new Intent(SelectTrigger.this, InputNote.class);
+                startActivity(nextIntent);
+            }
+        });
+
+        // back to last page
+        ImageButton backButton = findViewById(R.id.button_back_arrow);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent lastIntent = new Intent(SelectTrigger.this, SelectionActivity2.class);
+                startActivity(lastIntent);
+            }
+        });
 
 
 
