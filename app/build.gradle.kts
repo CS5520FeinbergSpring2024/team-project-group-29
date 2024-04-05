@@ -40,5 +40,6 @@ dependencies {
     implementation ("com.google.android.flexbox:flexbox:3.0.0") // Replace with the latest version
     implementation(platform("com.google.firebase:firebase-bom:32.8.0")) // firebase BoM
     implementation("com.google.firebase:firebase-database")
+    implementation("com.google.firebase:firebase-auth")
 
 }
