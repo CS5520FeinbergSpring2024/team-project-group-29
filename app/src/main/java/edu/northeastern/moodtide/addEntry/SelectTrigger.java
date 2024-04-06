@@ -32,7 +32,8 @@ import edu.northeastern.moodtide.object.Trigger;
 public class SelectTrigger extends AppCompatActivity {
     ObservableTriggerList triggerList;
     FlexboxLayout flexboxLayout;
-    String currentMood;
+    String currentCategory, currentMood;
+    int currentColor;
 
     ArrayList<Trigger> selectedTriggers;
 
@@ -41,9 +42,13 @@ public class SelectTrigger extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_trigger);
 
+        currentCategory = getIntent().getStringExtra("category");
+        currentMood = getIntent().getStringExtra("emotion");
+        currentColor = getIntent().getIntExtra("color",0);
+
         //set the title and color according to the selected mood
         TextView textViewTitle = findViewById(R.id.text_trigger_tile);
-        textViewTitle.setText("What makes you" + currentMood + "?");
+        textViewTitle.setText("What makes you " + currentMood + "?");
         //todo set the tile color
 
 
