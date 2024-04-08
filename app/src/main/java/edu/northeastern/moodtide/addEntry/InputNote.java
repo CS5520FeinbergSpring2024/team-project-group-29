@@ -18,6 +18,15 @@ public class InputNote extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_note);
 
+        // back to last page
+        ImageButton backButton = findViewById(R.id.button_back_arrow);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         // check mark to complete
         ImageButton buttonComplete = findViewById(R.id.button_complete);
         buttonComplete.setOnClickListener(new View.OnClickListener() {
@@ -29,7 +38,7 @@ public class InputNote extends AppCompatActivity {
 
                 // add entry to database
 
-                //
+
             }
         });
     }

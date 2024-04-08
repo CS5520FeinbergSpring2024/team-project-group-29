@@ -2,13 +2,17 @@ package edu.northeastern.moodtide.addEntry;
 
 import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.text.InputType;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -20,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.window.OnBackInvokedDispatcher;
 
 import com.google.android.flexbox.FlexboxLayout;
 
@@ -47,9 +52,11 @@ public class SelectTrigger extends AppCompatActivity {
         currentColor = getIntent().getIntExtra("color",0);
 
         //set the title and color according to the selected mood
-        TextView textViewTitle = findViewById(R.id.text_trigger_tile);
-        textViewTitle.setText("What makes you " + currentMood + "?");
-        //todo set the tile color
+        TextView textViewMood = findViewById(R.id.text_trigger_emotion);
+        textViewMood.setText(currentMood + "?");
+        textViewMood.setBackgroundColor(currentColor);
+
+
 
 
         // find the flexbox layout
@@ -71,13 +78,13 @@ public class SelectTrigger extends AppCompatActivity {
             }
         });
 
+
         // back to last page
         ImageButton backButton = findViewById(R.id.button_back_arrow);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent lastIntent = new Intent(SelectTrigger.this, SelectionActivity2.class);
-                startActivity(lastIntent);
+                finish();
             }
         });
 
@@ -88,6 +95,42 @@ public class SelectTrigger extends AppCompatActivity {
 
 
     }
+
+
+
+//    @Override
+//    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+//        super.onSaveInstanceState(outState, outPersistentState);
+////        String currentCategory, currentMood;
+////        int currentColor;
+////
+////        ArrayList<Trigger> selectedTriggers;
+//        outState.putString("currentCategory", currentCategory);
+//        outState.putString("currentMood", currentMood);
+//        outState.putInt("currentColor", currentColor);
+//        outState.putParcelableArrayList("selectedTriggers", selectedTriggers);
+//    }
+//
+//    @Override
+//    public void onRestoreInstanceState(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+//        super.onRestoreInstanceState(savedInstanceState, persistentState);
+//        if(currentCategory == null) {
+//            currentCategory = savedInstanceState.getString("currentCategory");
+//        }
+//
+//        if(currentMood == null) {
+//            currentMood = savedInstanceState.getString("currentMood");
+//        }
+//
+//        if(currentColor == 0) {
+//            currentColor = savedInstanceState.getInt("currentColor");
+//
+//        }
+//
+//        if(selectedTriggers == null) {
+//            selectedTriggers = savedInstanceState.getParcelableArrayList("selectedTriggers");
+//        }
+//    }
 
     public void initiateDefinedTriggers() {
         // predefined triggers
@@ -100,6 +143,8 @@ public class SelectTrigger extends AppCompatActivity {
                 // Create and add a TextView for the new trigger
                 TextView textView = new TextView(new ContextThemeWrapper(SelectTrigger.this, R.style.TextViewWithBorder), null, 0);
                 textView.setText(trigger.getName());
+                GradientDrawable background = (GradientDrawable) textView.getBackground();
+                background.setStroke(3,  currentColor);
 
                 // click to select multiple triggers
                 selectedTriggers = new ArrayList<>();
