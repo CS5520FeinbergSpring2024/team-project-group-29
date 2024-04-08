@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="5dp"
+    app:cardCornerRadius="10dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gallavich"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/emotion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Shameless"
+            android:textSize="18dp"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/trigger"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Family, Friend"
+            android:textSize="16dp"
+            android:layout_marginTop="5dp"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/test"/>
+
+        </ScrollView>
+
+
+
+
+
+
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -41,5 +41,5 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.8.0")) // firebase BoM
     implementation("com.google.firebase:firebase-database")
     implementation("com.google.firebase:firebase-auth")
-
+    implementation ("com.applandeo:material-calendar-view:1.9.2")
 }
