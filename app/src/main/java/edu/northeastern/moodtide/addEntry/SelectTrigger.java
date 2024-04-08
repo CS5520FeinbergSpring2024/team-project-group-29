@@ -73,7 +73,11 @@ public class SelectTrigger extends AppCompatActivity {
         forwardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // pass on the variables
                 Intent nextIntent = new Intent(SelectTrigger.this, InputNote.class);
+                nextIntent.putExtra("category", currentCategory);
+                nextIntent.putExtra("mood", currentMood);
+                nextIntent.putExtra("triggers", selectedTriggers);
                 startActivity(nextIntent);
             }
         });

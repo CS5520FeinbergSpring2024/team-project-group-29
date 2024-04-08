@@ -7,8 +7,9 @@ public class Entry {
 
     private String category;
     private String emotion;
-    private List<String> triggers;
+    private List<Trigger> triggers;
     private String note;
+
 
     public Entry(){
         this.category="null";
@@ -16,12 +17,21 @@ public class Entry {
         this.triggers=new ArrayList<>();
         this.note="null";
     }
-    public Entry(String category, String emotion, List<String> triggers, String note){
+    public Entry(String category, String emotion, List<Trigger> triggers, String note){
         this.category=category;
         this.emotion=emotion;
         this.triggers=triggers;
         this.note=note;
     }
+    // constructor when note is empty
+    public Entry(String category, String emotion, List<Trigger> triggers){
+        this.category=category;
+        this.emotion=emotion;
+        this.triggers=triggers;
+        this.note= "";
+    }
+
+
 
     // Getter for category
     public String getCategory() {
@@ -44,12 +54,12 @@ public class Entry {
     }
 
     // Getter for triggers
-    public List<String> getTriggers() {
+    public List<Trigger> getTriggers() {
         return triggers;
     }
 
     // Setter for triggers
-    public void setTriggers(List<String> triggers) {
+    public void setTriggers(List<Trigger> triggers) {
         this.triggers = triggers;
     }
 

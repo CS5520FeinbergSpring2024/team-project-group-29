@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-public class Trigger implements Parcelable {
+public class Trigger implements Parcelable  {
     String name;
 
     public Trigger(String name) {

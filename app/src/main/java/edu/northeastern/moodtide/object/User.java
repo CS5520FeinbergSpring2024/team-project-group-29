@@ -1,27 +1,31 @@
 package edu.northeastern.moodtide.object;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class User {
 
     private String id;
-    private List<Entry> data;
+    private HashMap<String, HashMap<String, Entry>> data;
     private int streak;
     private String lastDate;
+    private List<Trigger> myTriggers;
 
     public User() {
         id = "null";
-        data = new ArrayList<>();
+        data = new HashMap<>();
         streak = 0;
         lastDate = "null";
+        myTriggers = new ArrayList<>();
     }
 
     public User(String id) {
         this.id = id;
-        this.data = new ArrayList<>();
+        this.data = new HashMap<>();
         this.streak = 0;
         this.lastDate = "null";
+        this.myTriggers = new ArrayList<>();
     }
 
     public String getId() {
@@ -32,11 +36,11 @@ public class User {
         this.id = id;
     }
 
-    public List<Entry> getData() {
+    public HashMap<String, HashMap<String, Entry>> getData() {
         return data;
     }
 
-    public void setData(List<Entry> data) {
+    public void setData(HashMap<String, HashMap<String, Entry>> data) {
         this.data = data;
     }
 
@@ -47,4 +51,12 @@ public class User {
     public String getLastDate(){ return lastDate; }
 
     public void setLastDate(String lastDate){ this.lastDate=lastDate;}
+
+    public List<Trigger> getMyTriggers() {
+        return myTriggers;
+    }
+
+    public void setMyTriggers(List<Trigger> myTriggers) {
+        this.myTriggers = myTriggers;
+    }
 }
