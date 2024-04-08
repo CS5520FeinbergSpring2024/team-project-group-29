@@ -18,6 +18,7 @@ import java.util.Locale;
 
 import edu.northeastern.moodtide.R;
 import edu.northeastern.moodtide.object.Entry;
+import edu.northeastern.moodtide.object.Trigger;
 
 public class EntryDialog extends DialogFragment {
 
@@ -76,11 +77,30 @@ public class EntryDialog extends DialogFragment {
         return builder.create();
     }
 
+    public static String printTriggers(List<Trigger> triggers) {
+        StringBuilder combinedNames = new StringBuilder();
+
+        // Iterate through the list of Trigger objects
+        for (int i = 0; i < triggers.size(); i++) {
+            Trigger trigger = triggers.get(i);
+
+            // Append the trigger name to the StringBuilder
+            combinedNames.append(trigger.getName());
+
+            // Append a separator and space if it's not the last trigger
+            if (i < triggers.size() - 1) {
+                combinedNames.append(" | ");
+            }
+        }
+
+        return combinedNames.toString();
+    }
+
     private void fillEntry(Entry entry){
 
         category.setText(entry.getCategory());
         emotion.setText(entry.getEmotion());
-        triggers.setText(String.join(" | ", entry.getTriggers()));
+        triggers.setText(printTriggers(entry.getTriggers()));
         note.setText(entry.getNote());
         index.setText(String.format(Locale.getDefault(), "%d/%d", currentIndex + 1, entries.size()));
     }

@@ -39,7 +39,8 @@ public class Entry implements Parcelable {
     protected Entry(Parcel in) {
         category = in.readString();
         emotion = in.readString();
-        triggers = in.createStringArrayList();
+        triggers = new ArrayList<>();
+        in.readList(triggers, Trigger.class.getClassLoader());
         note = in.readString();
     }
 
@@ -59,7 +60,7 @@ public class Entry implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(category);
         dest.writeString(emotion);
-        dest.writeStringList(triggers);
+        dest.writeList(triggers);
         dest.writeString(note);
     }
 

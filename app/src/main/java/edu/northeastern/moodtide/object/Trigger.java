@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 public class Trigger implements Parcelable  {
     String name;
 
+    public Trigger(){this.name="";}
+
     public Trigger(String name) {
         this.name = name;
     }
@@ -41,4 +43,5 @@ public class Trigger implements Parcelable  {
     public void writeToParcel(@NonNull Parcel parcel, int i) {
         parcel.writeString(name);
     }
+
 }
