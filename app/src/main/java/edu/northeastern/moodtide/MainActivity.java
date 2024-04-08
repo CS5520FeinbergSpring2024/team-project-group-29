@@ -40,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Button signIn, signUp;
     private EditText emailInput, passwordInput;
-    private String email, password;
+    private TextView reset;
+    private String email, password, savedEmail, savedPassword;
 
     private DatabaseReference usersRef= FirebaseDatabase.getInstance().getReference();
 
@@ -52,8 +53,17 @@ public class MainActivity extends AppCompatActivity {
 
         emailInput = findViewById(R.id.emailEditText);
         passwordInput = findViewById(R.id.passwordEditText);
+        SharedPreferences sharedPreferences = getSharedPreferences("memory", Context.MODE_PRIVATE);
+        savedEmail = sharedPreferences.getString("email", "").trim();
+        savedPassword = sharedPreferences.getString("password", "").trim();
+        if(!TextUtils.isEmpty(savedEmail)){emailInput.setText(savedEmail);}
+        if(!TextUtils.isEmpty(savedPassword)){passwordInput.setText(savedPassword);}
+
+
         signUp = findViewById(R.id.signUpButton);
         signIn = findViewById(R.id.signInButton);
+        reset = findViewById(R.id.resetPassword);
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -67,6 +77,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 signUpUser();
+            }
+        });
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                email = emailInput.getText().toString().trim();
+                if(TextUtils.isEmpty(email)){
+                    Toast.makeText(MainActivity.this, "Please enter your email.",
+                            Toast.LENGTH_SHORT).show();
+                }else{forgotPassword(email);}
             }
         });
 
@@ -90,9 +110,11 @@ public class MainActivity extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             String uid = user.getUid();
                             // Get SharedPreferences instance
-                            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                            SharedPreferences sharedPreferences = getSharedPreferences("memory", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("uid", uid);
+                            editor.putString("email", email);
+                            editor.putString("password", password);
                             editor.apply();
 
                             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
@@ -147,18 +169,18 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
     }
-//    private void forgotPassword(String email) {
-//        mAuth.sendPasswordResetEmail(email)
-//                .addOnCompleteListener(task -> {
-//                    if (task.isSuccessful()) {
-//                        // Password reset email sent successfully
-//                        Toast.makeText(MainActivity.this, "Password reset email sent", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        // Password reset email failed to send
-//                        Toast.makeText(MainActivity.this, "Failed to send password reset email", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//    }
+    private void forgotPassword(String email) {
+        mAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Password reset email sent successfully
+                        Toast.makeText(MainActivity.this, "Password reset email sent", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // Password reset email failed to send
+                        Toast.makeText(MainActivity.this, "Failed to send password reset email", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
 //
 //    private void showSnackbar(String message) {
 //        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show();
