@@ -1,11 +1,9 @@
 <resources>
     <string name="app_name">MoodTide</string>
     <string name="resetPassword"><u>Forgot password?</u></string>
-    <string name="test">Gallavich is the canon relationship between
-        Ian Gallagher and Mickey Milkovich in the American Showtime
-        comedy-drama television series Shameless (US) which is a remake
-        of the British series which focuses on the dysfunctional Gallagher
-        family set in Chicago.</string>
+    <string name="test">This is a test string. This is a test string. This is a test string.
+        This is a test string. This is a test string. This is a test string. This is a test string.
+        This is a test string. This is a test string. This is a test string. This is a test string. </string>
 
     <string name="Revolted">feeling unpleasantly shocked or disgusted</string>
     <string name="Contempt">feeling a combination of anger and disgust</string>

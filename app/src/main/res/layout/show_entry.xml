@@ -15,14 +15,14 @@
             android:id="@+id/category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Gallavich"
+            android:text="Category"
             android:textSize="20dp"/>
 
         <TextView
             android:id="@+id/emotion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Shameless"
+            android:text="Emotion"
             android:textSize="18dp"
             android:layout_marginTop="5dp"/>
 
@@ -30,7 +30,7 @@
             android:id="@+id/trigger"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Family, Friend"
+            android:text="Trigger, trigger, trigger"
             android:textSize="16dp"
             android:layout_marginTop="5dp"/>
 
@@ -47,10 +47,43 @@
 
         </ScrollView>
 
+        <TextView
+            android:id="@+id/index"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="current page/total pages"
+            android:textAlignment="textEnd"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/previous"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Previous"/>
+
+            <!-- Empty View for Spacing -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:visibility="invisible"/>
+            <Button
+                android:id="@+id/next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next"/>
+            <Button
+                android:id="@+id/close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Close" />
 
 
-
-
+        </LinearLayout>
 
 
 

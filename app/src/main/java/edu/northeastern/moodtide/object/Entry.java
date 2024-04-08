@@ -1,9 +1,12 @@
 package edu.northeastern.moodtide.object;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Entry {
+public class Entry implements Parcelable {
 
     private String category;
     private String emotion;
@@ -32,6 +35,38 @@ public class Entry {
     }
 
 
+
+    protected Entry(Parcel in) {
+        category = in.readString();
+        emotion = in.readString();
+        triggers = in.createStringArrayList();
+        note = in.readString();
+    }
+
+    public static final Creator<Entry> CREATOR = new Creator<Entry>() {
+        @Override
+        public Entry createFromParcel(Parcel in) {
+            return new Entry(in);
+        }
+
+        @Override
+        public Entry[] newArray(int size) {
+            return new Entry[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(category);
+        dest.writeString(emotion);
+        dest.writeStringList(triggers);
+        dest.writeString(note);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
     // Getter for category
     public String getCategory() {
