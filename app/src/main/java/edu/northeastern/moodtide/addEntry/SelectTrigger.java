@@ -27,6 +27,12 @@ import android.widget.TextView;
 import android.window.OnBackInvokedDispatcher;
 
 import com.google.android.flexbox.FlexboxLayout;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,17 +41,23 @@ import edu.northeastern.moodtide.R;
 import edu.northeastern.moodtide.object.Trigger;
 
 public class SelectTrigger extends AppCompatActivity {
-    ObservableTriggerList triggerList;
+    List<Trigger> triggerList;
     FlexboxLayout flexboxLayout;
     String currentCategory, currentMood;
     int currentColor;
 
     ArrayList<Trigger> selectedTriggers;
+    DatabaseReference triggersRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_trigger);
+
+        // get database reference for triggers of current user
+        String uid = getSharedPreferences("memory", Context.MODE_PRIVATE).getString("uid", "");
+        triggersRef = FirebaseDatabase.getInstance().getReference(uid).child("myTriggers");
+
 
         currentCategory = getIntent().getStringExtra("category");
         currentMood = getIntent().getStringExtra("emotion");
@@ -137,18 +149,22 @@ public class SelectTrigger extends AppCompatActivity {
 //    }
 
     public void initiateDefinedTriggers() {
-        // predefined triggers
-        triggerList = new ObservableTriggerList();
+//        // predefined triggers
+        triggerList = new ArrayList<>();
 
-        // set listener when a trigger added, generate a textview add to flexbox
-        triggerList.setOnItemAddedListener(new ObservableTriggerList.OnItemAddedListener() {
+        // retrieve trigger from database
+        triggersRef.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onItemAdded(Trigger trigger) {
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Trigger trigger = snapshot.getValue(Trigger.class);
+                // add to the list
+                triggerList.add(trigger);
                 // Create and add a TextView for the new trigger
                 TextView textView = new TextView(new ContextThemeWrapper(SelectTrigger.this, R.style.TextViewWithBorder), null, 0);
                 textView.setText(trigger.getName());
                 GradientDrawable background = (GradientDrawable) textView.getBackground();
                 background.setStroke(3,  currentColor);
+
 
                 // click to select multiple triggers
                 selectedTriggers = new ArrayList<>();
@@ -163,16 +179,14 @@ public class SelectTrigger extends AppCompatActivity {
                                 // change
                                 isHighlighted[0] = true;
                                 // add selected trigger to the list
-                                selectedTriggers.add(triggerList.getTriggerAt(index));
-                                Log.d("SELECTED TRIGGER", triggerList.getTriggerAt(index).getName());
+                                selectedTriggers.add(triggerList.get(index));
+                                Log.d("SELECTED TRIGGER", triggerList.get(index).getName());
                                 // change the color of the border
-
                                 background.setStroke(3, getResources().getColor(R.color.selected_trigger_highlighted_border)); // New border color
                             } else {
-                                selectedTriggers.remove(triggerList.getTriggerAt(index));
-                                Log.d("REMOVED TRIGGER", triggerList.getTriggerAt(index).getName());
+                                selectedTriggers.remove(triggerList.get(index));
+                                Log.d("REMOVED TRIGGER", triggerList.get(index).getName());
                                 background.setStroke(3, Color.BLACK); // New border color
-
                             }
 
 
@@ -186,24 +200,39 @@ public class SelectTrigger extends AppCompatActivity {
                         FlexboxLayout.LayoutParams.WRAP_CONTENT,
                         FlexboxLayout.LayoutParams.WRAP_CONTENT
                 );
-                layoutParams.setMargins(10, 10, 10, 10); // Optional: set margins
+                layoutParams.setMargins(10, 10, 10, 10);
                 textView.setLayoutParams(layoutParams);
-
 
                 // always add to the last but one
                 flexboxLayout.addView(textView, flexboxLayout.getChildCount() - 1);
 
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
 
-        // add predefined triggers to the list
-        triggerList.addTrigger(new Trigger("Food"));
-        triggerList.addTrigger(new Trigger("Weather"));
-        triggerList.addTrigger(new Trigger("Friend"));
-        triggerList.addTrigger(new Trigger("Family"));
-        triggerList.addTrigger(new Trigger("Work"));
-        triggerList.addTrigger(new Trigger("School"));
+        // set listener when a trigger added, generate a textview add to flexbox
+
+
+
+
 
 
 
@@ -224,7 +253,7 @@ public class SelectTrigger extends AppCompatActivity {
         addTriggerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // set the tect to empty
+                // set the text to empty
                 addTriggerView.setText("");
                 // Make sure the EditText can gain focus
                 addTriggerView.setFocusableInTouchMode(true);
@@ -234,7 +263,6 @@ public class SelectTrigger extends AppCompatActivity {
                 addTriggerView.clearFocus();
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(addTriggerView, InputMethodManager.SHOW_IMPLICIT);
-
 
             }
         });
@@ -250,7 +278,7 @@ public class SelectTrigger extends AppCompatActivity {
                     String newTrigger = addTriggerView.getText().toString();
                     if(!newTrigger.equals("")) {
                         // add trigger
-                        triggerList.addTrigger(new Trigger(newTrigger));
+                        triggersRef.push().setValue(new Trigger(newTrigger));
                     }
                     addTriggerView.setText(" + ");
                     Log.e("edit done", "edit done");
@@ -267,31 +295,35 @@ public class SelectTrigger extends AppCompatActivity {
 
     }
 
-    // observer design pattern detecting the new trigger added and generate new textView to flexbox layout
-    private static class ObservableTriggerList {
-        private ArrayList<Trigger> list = new ArrayList<>();
-        private OnItemAddedListener listener;
-
-        public interface OnItemAddedListener {
-            void onItemAdded(Trigger trigger);
-        }
-
-        public void setOnItemAddedListener(OnItemAddedListener listener) {
-            this.listener = listener;
-        }
-
-        public void addTrigger(Trigger trigger) {
-            list.add(trigger);
-            if (listener != null) {
-                listener.onItemAdded(trigger);
-            }
-        }
-
-        public Trigger getTriggerAt(int index) {
-            return list.get(index);
-        }
-
-        // Other necessary list methods can be added here (e.g., get, remove)
-    }
+//    // observer design pattern detecting the new trigger added and generate new textView to flexbox layout
+//    private static class ObservableTriggerList {
+//        private ArrayList<Trigger> list = new ArrayList<>();
+//        private OnItemAddedListener listener;
+//
+//        public interface OnItemAddedListener {
+//            void onItemAdded(Trigger trigger);
+//        }
+//
+//        public void setOnItemAddedListener(OnItemAddedListener listener) {
+//            this.listener = listener;
+//        }
+//
+//        public void addTrigger(Trigger trigger) {
+//            list.add(trigger);
+//            if (listener != null) {
+//                listener.onItemAdded(trigger);
+//            }
+//
+//            // push it to database
+//
+//
+//        }
+//
+//        public Trigger getTriggerAt(int index) {
+//            return list.get(index);
+//        }
+//
+//        // Other necessary list methods can be added here (e.g., get, remove)
+//    }
 }
 

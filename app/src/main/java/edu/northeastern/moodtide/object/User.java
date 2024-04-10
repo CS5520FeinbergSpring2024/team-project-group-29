@@ -27,6 +27,14 @@ public class User {
         this.lastDate = "null";
         this.myTriggers = new ArrayList<>();
     }
+    public User(String id, List<Trigger> myTriggers) {
+        this.id = id;
+        this.data = new HashMap<>();
+        this.streak = 0;
+        this.lastDate = "null";
+        this.myTriggers = myTriggers;
+
+    }
 
     public String getId() {
         return id;

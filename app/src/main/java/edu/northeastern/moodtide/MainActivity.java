@@ -31,7 +31,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.northeastern.moodtide.addEntry.SelectionActivity;
+import edu.northeastern.moodtide.object.Trigger;
 import edu.northeastern.moodtide.object.User;
 
 
@@ -44,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private String email, password, savedEmail, savedPassword;
 
     private DatabaseReference usersRef= FirebaseDatabase.getInstance().getReference();
+    
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,9 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                signInUser();
-            }
+            public void onClick(View v) {signInUser();}
         });
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+    
+
+
 
     private void signInUser(){
         email = emailInput.getText().toString().trim();
@@ -149,7 +155,15 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
                             String uid = user.getUid();
-                            User addUser=new User(uid);
+                            // predefined triggers
+                            List<Trigger> myTriggers = new ArrayList<>();
+                            myTriggers.add(new Trigger("Food"));
+                            myTriggers.add(new Trigger("Friend"));
+                            myTriggers.add(new Trigger("Weather"));
+                            myTriggers.add(new Trigger("Family"));
+                            myTriggers.add(new Trigger("Work"));
+                            myTriggers.add(new Trigger("School"));
+                            User addUser = new User(uid, myTriggers);
                             usersRef.child(uid).setValue(addUser);
                             Toast.makeText(MainActivity.this, "New account created.",
                                     Toast.LENGTH_SHORT).show();

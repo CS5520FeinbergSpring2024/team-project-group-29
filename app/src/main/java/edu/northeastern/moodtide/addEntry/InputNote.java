@@ -76,8 +76,6 @@ public class InputNote extends AppCompatActivity {
 
 
                 // get local date and time
-
-
                 String timeStr = LocalTime.now().toString();
                 String time = timeStr.replace(":", "_").replace(".", "_");
                 String date = LocalDate.now().toString();
