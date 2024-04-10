@@ -70,18 +70,6 @@ public class CalendarActivity extends AppCompatActivity {
                 }
             }
         });
-        calendarView.setOnPreviousPageChangeListener(new OnCalendarPageChangeListener() {
-            @Override
-            public void onChange() {
-                paintCurrentMonth();
-            }
-        });
-        calendarView.setOnForwardPageChangeListener(new OnCalendarPageChangeListener() {
-            @Override
-            public void onChange() {
-                paintCurrentMonth();
-            }
-        });
     }
 
     public void getUser() {
@@ -90,11 +78,10 @@ public class CalendarActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    // User data exists at the specified path
                     user = dataSnapshot.getValue(User.class);
                     record = user.getData();
                     validDates = record.keySet();
-                    paintCurrentMonth();
+                    drawIcons();
                 }
             }
             @Override
@@ -102,30 +89,20 @@ public class CalendarActivity extends AppCompatActivity {
         });
     }
 
-    public void paintCurrentMonth() {
-        Calendar currentMonthCalendar = calendarView.getCurrentPageDate();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM", Locale.getDefault());
-        String currentMonthYearString = dateFormat.format(currentMonthCalendar.getTime());
-        Log.e("Get month",currentMonthYearString);
+    public void drawIcons() {
+
         calendarDays = new ArrayList<>();
         for(String date:validDates){
-            String entryMonthYear = date.substring(0, 7);
-            if(currentMonthYearString.equals(entryMonthYear)){
-                Log.e("Get month",date);
-                paintDate(date);
-            }
+            drawIcon(date);
         }
-        Log.e("painted?",Integer.toString(calendarDays.size()));
         calendarView.setCalendarDays(calendarDays);
-        //calendarView.clearSelectedDays();
 
     }
-    public void paintDate(String date){
+    public void drawIcon(String date){
         List<Entry> entries = getEntries(date);
         Set<Integer> colors = new HashSet<>();
         for(Entry e: entries){
             String category=e.getCategory();
-            Log.e("Get entry",category);
             int colorID=-1;
             switch (category){
                 case "Love":
@@ -154,14 +131,9 @@ public class CalendarActivity extends AppCompatActivity {
             colorList[i++]=color;
         }
         CustomDotDrawable dots = new CustomDotDrawable(this,colorList);
-        if(dots!=null){Log.e("paint","paint");}
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-
-            // Parse the date string into a Date object
             Date dateFormatted = dateFormat.parse(date);
-
-            // Convert the Date object into a CalendarDay object
             if (date != null) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(dateFormatted);
@@ -173,7 +145,6 @@ public class CalendarActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace(); // Handle parsing exception if necessary
         }
-
     }
 
 
