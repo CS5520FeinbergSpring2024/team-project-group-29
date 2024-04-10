@@ -97,6 +97,42 @@ public class InputNote extends AppCompatActivity {
                 DatabaseReference dataRef = userRef.child("data");
                 DatabaseReference dateRef = dataRef.child(date);
                 dateRef.child(time).setValue(entry);
+
+                // update days of streak
+
+                DatabaseReference streakRef = userRef.child("streak");
+                DatabaseReference lastDateRef = userRef.child("lastDate");
+                final String[] lastDate = {""};
+                // retrive lastDate
+                lastDateRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        lastDate[0] = snapshot.getValue().toString();
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+                Log.e("LASTDATE", lastDate[0]);
+                // Parse the date strings into LocalDate objects
+                if(!lastDate[0].equals("")) {
+                    LocalDate lastDay = LocalDate.parse(lastDate[0]);
+                    LocalDate today = LocalDate.parse(date);
+                    boolean isNextDay = lastDay.plusDays(1).equals(today);
+                    if(isNextDay) {
+                        streakRef.setValue(streakRef.toString() + 1);
+                    } else {
+                        streakRef.setValue(1);
+                    }
+
+                } else {
+                    streakRef.setValue(1);
+
+                }
+
+                lastDateRef.setValue(date);
+
+
                 Toast.makeText(InputNote.this, "Your mood has been recorded", Toast.LENGTH_SHORT).show();
                 startActivity(mainIntent);
             }

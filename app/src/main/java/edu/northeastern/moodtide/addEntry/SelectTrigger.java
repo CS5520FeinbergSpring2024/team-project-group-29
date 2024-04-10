@@ -104,14 +104,7 @@ public class SelectTrigger extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
     }
-
 
 
 //    @Override
@@ -227,16 +220,6 @@ public class SelectTrigger extends AppCompatActivity {
 
             }
         });
-
-        // set listener when a trigger added, generate a textview add to flexbox
-
-
-
-
-
-
-
-
     }
 
     public void addYourOwnTrigger() {
@@ -277,8 +260,8 @@ public class SelectTrigger extends AppCompatActivity {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     String newTrigger = addTriggerView.getText().toString();
                     if(!newTrigger.equals("")) {
-                        // add trigger
-                        triggersRef.push().setValue(new Trigger(newTrigger));
+                        // push it to database
+                        triggersRef.child(Integer.toString(triggerList.size())).setValue(new Trigger(newTrigger));
                     }
                     addTriggerView.setText(" + ");
                     Log.e("edit done", "edit done");

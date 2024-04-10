@@ -2,31 +2,51 @@ package edu.northeastern.moodtide;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import edu.northeastern.moodtide.addEntry.SelectTrigger;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import edu.northeastern.moodtide.addEntry.SelectionActivity;
-import edu.northeastern.moodtide.getQuote.GetQuote;
+import edu.northeastern.moodtide.getData.GetQuote;
 import edu.northeastern.moodtide.calendarView.CalendarActivity;
+import edu.northeastern.moodtide.getData.GetStreak;
+import edu.northeastern.moodtide.getData.GetTodayCount;
 
 public class HomeActivity extends AppCompatActivity {
 
     ImageView addEntry;
     TextView calendar;
+    DatabaseReference userRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String uid = getSharedPreferences("memory", Context.MODE_PRIVATE).getString("uid", "");
+        userRef = database.getReference(uid);
+
         // display daily quote
         Thread thread = new Thread(new GetQuote(this));
         thread.start();
+
+        // display number of streaks
+        Thread thread1 = new Thread(new GetStreak(this, userRef));
+        thread1.start();
+
+        // display today counts
+        Thread thread2 = new Thread(new GetTodayCount(this, userRef));
+        thread2.start();
+
+
+
         // add entry when clicking "+"
         addEntry = (ImageView) findViewById(R.id.nav_home);
         addEntry.setOnClickListener(new View.OnClickListener() {

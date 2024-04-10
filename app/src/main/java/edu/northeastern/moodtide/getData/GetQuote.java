@@ -1,4 +1,4 @@
-package edu.northeastern.moodtide.getQuote;
+package edu.northeastern.moodtide.getData;
 
 import android.app.Activity;
 import android.util.Log;
@@ -37,7 +37,6 @@ public class GetQuote implements Runnable{
                     quoteTextView.setText(quote);
                 }
             });
-
 
         } catch (IOException | JSONException e) {
             e.printStackTrace();
