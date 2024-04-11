@@ -4,10 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
 import com.applandeo.materialcalendarview.CalendarDay;
@@ -31,7 +38,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import edu.northeastern.moodtide.HomeActivity;
 import edu.northeastern.moodtide.R;
+import edu.northeastern.moodtide.addEntry.SelectionActivity;
 import edu.northeastern.moodtide.object.Entry;
 import edu.northeastern.moodtide.object.User;
 import edu.northeastern.moodtide.shapes.CustomDotDrawable;
@@ -45,6 +54,7 @@ public class CalendarActivity extends AppCompatActivity {
     User user;
     List<String> daysWithEntry;
     List<CalendarDay> calendarDays;
+    LinearLayout calendar, home, analyze;
 
 
     @Override
@@ -68,6 +78,22 @@ public class CalendarActivity extends AppCompatActivity {
                 if(entries!=null){
                     showEntryDialog(entries, formattedDate);
                 }
+            }
+        });
+
+        Drawable drawable = ContextCompat.getDrawable(this, R.drawable.calendar);
+        drawable.setColorFilter(ContextCompat.getColor(this, R.color.ocean_theme), android.graphics.PorterDuff.Mode.SRC_IN);
+        ImageView calendarIcon = findViewById(R.id.calendar_icon);
+        calendarIcon.setImageDrawable(drawable);
+        TextView calendarTitle = findViewById(R.id.calendar_title);
+        calendarTitle.setTextColor(getColor(R.color.ocean_theme));
+
+        home = findViewById(R.id.home_container);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CalendarActivity.this, HomeActivity.class);
+                startActivity(intent);
             }
         });
     }

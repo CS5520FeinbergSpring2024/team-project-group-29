@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
@@ -20,8 +22,9 @@ import edu.northeastern.moodtide.getData.GetTodayCount;
 
 public class HomeActivity extends AppCompatActivity {
 
-    ImageView addEntry;
-    TextView calendar;
+    LinearLayout calendar, home, analyze;
+    TextView homeTitle;
+    ImageView homeIcon;
     DatabaseReference userRef;
 
     @Override
@@ -48,15 +51,19 @@ public class HomeActivity extends AppCompatActivity {
 
 
         // add entry when clicking "+"
-        addEntry = (ImageView) findViewById(R.id.nav_home);
-        addEntry.setOnClickListener(new View.OnClickListener() {
+        home = findViewById(R.id.home_container);
+        homeIcon = findViewById(R.id.home_icon);
+        homeTitle = findViewById(R.id.home_title);
+        homeIcon.setImageResource(R.drawable.add);
+        homeTitle.setText("Add");
+        home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, SelectionActivity.class);
                 startActivity(intent);
             }
         });
-        calendar = findViewById(R.id.nav_calendar);
+        calendar = findViewById(R.id.calendar_container);
         calendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
