@@ -3,6 +3,7 @@ package edu.northeastern.moodtide.analyze;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +19,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -144,33 +146,37 @@ public class AnalyzeActivity extends AppCompatActivity {
             pieEntries.add(new PieEntry(entry.getValue().floatValue(), entry.getKey()));
             switch (entry.getKey()) {
                 case "Anger":
-                    categoryColors.add(R.color.pink_theme);
+                    categoryColors.add(ContextCompat.getColor(this, R.color.pink_theme));
                     Log.e("Anger here", "anger here");
                     break;
                 case "Fear":
-                    categoryColors.add(R.color.orange_theme);
+                    categoryColors.add(ContextCompat.getColor(this, R.color.orange_theme));
                 case "Love":
-                    categoryColors.add(R.color.yellow_theme);
+                    categoryColors.add(ContextCompat.getColor(this, R.color.yellow_theme));
                     break;
                 case "Joy":
-                    categoryColors.add(R.color.green_theme);
+                    categoryColors.add(ContextCompat.getColor(this, R.color.green_theme));
                     break;
                 case "Surprise":
-                    categoryColors.add(R.color.aqua_theme);
+                    categoryColors.add(ContextCompat.getColor(this, R.color.aqua_theme));
                     break;
                 case "Sadness":
-                    categoryColors.add(R.color.ocean_theme);
+                    categoryColors.add(ContextCompat.getColor(this, R.color.ocean_theme));
                     break;
                 default:
-                    categoryColors.add(R.color.white);
+                    categoryColors.add(ContextCompat.getColor(this, R.color.white));
             }
         }
 
         PieDataSet dataSet = new PieDataSet(pieEntries, "Emotion Categories");
-        PieData data = new PieData(dataSet);
         dataSet.setColors(categoryColors);
+        PieData data = new PieData(dataSet);
+        data.setValueFormatter(new PercentFormatter(pieChart));
+        data.setValueTextSize(11f); // set percentage text size
         pieChart.setData(data);
-        pieChart.setTransparentCircleAlpha(255);
+        pieChart.setUsePercentValues(true); // Enable percentage display
+        pieChart.getDescription().setEnabled(false); // Disable the description label
+        pieChart.getLegend().setEnabled(false); // Disable the legend
         pieChart.invalidate(); // refresh the chart;
 
 
