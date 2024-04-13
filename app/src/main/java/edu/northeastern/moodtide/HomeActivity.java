@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import edu.northeastern.moodtide.addEntry.SelectionActivity;
+import edu.northeastern.moodtide.analyze.AnalyzeActivity;
 import edu.northeastern.moodtide.getData.GetQuote;
 import edu.northeastern.moodtide.calendarView.CalendarActivity;
 import edu.northeastern.moodtide.getData.GetStreak;
@@ -50,8 +51,6 @@ public class HomeActivity extends AppCompatActivity {
         Thread thread2 = new Thread(new GetTodayCount(this, userRef));
         thread2.start();
 
-
-
         // add entry when clicking "+"
         home = findViewById(R.id.home_container);
         homeIcon = findViewById(R.id.home_icon);
@@ -65,11 +64,23 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // calendar activity
         calendar = findViewById(R.id.calendar_container);
         calendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // analyze activity
+        analyze = findViewById(R.id.stats_container);
+        analyze.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, AnalyzeActivity.class);
                 startActivity(intent);
             }
         });

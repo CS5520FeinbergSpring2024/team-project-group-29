@@ -41,6 +41,7 @@ import java.util.Set;
 import edu.northeastern.moodtide.HomeActivity;
 import edu.northeastern.moodtide.R;
 import edu.northeastern.moodtide.addEntry.SelectionActivity;
+import edu.northeastern.moodtide.analyze.AnalyzeActivity;
 import edu.northeastern.moodtide.object.Entry;
 import edu.northeastern.moodtide.object.User;
 import edu.northeastern.moodtide.shapes.CustomDotDrawable;
@@ -93,6 +94,16 @@ public class CalendarActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CalendarActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // analyze activity
+        analyze = findViewById(R.id.stats_container);
+        analyze.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CalendarActivity.this, AnalyzeActivity.class);
                 startActivity(intent);
             }
         });
