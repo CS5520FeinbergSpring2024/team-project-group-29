@@ -59,7 +59,10 @@
                 android:layout_height="300dp"
                 android:padding="8dp">
 
-            <!-- Include your PieChart Fragment here -->
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pieChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
             </FrameLayout>
 
             <!-- Title for Bar Chart -->
