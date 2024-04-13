@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+import java.util.Objects;
+
 public class Trigger implements Parcelable  {
     String name;
 
@@ -42,6 +44,18 @@ public class Trigger implements Parcelable  {
     @Override
     public void writeToParcel(@NonNull Parcel parcel, int i) {
         parcel.writeString(name);
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true; // Check if the objects are the same instance
+        if (o == null || getClass() != o.getClass()) return false; // Check for null and compare classes
+        Trigger trigger = (Trigger) o; // Type cast
+        return Objects.equals(name, trigger.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name); // Compute hash based on id and description
     }
 
 }

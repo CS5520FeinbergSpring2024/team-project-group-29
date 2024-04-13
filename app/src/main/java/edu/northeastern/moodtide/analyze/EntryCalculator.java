@@ -1,5 +1,6 @@
 package edu.northeastern.moodtide.analyze;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,12 +19,23 @@ public class EntryCalculator {
         }
         return categoryCounts;
     }
-//    public static Map<String, Map<String, Integer>> calculateCategoryCountPerTrigger(List<Entry> entries) {
-//        Map<String, Map<String, Integer>> triggerEmotionCount = new HashMap<>();
-//        for(Entry entry: entries) {
-//
-//
-//        }
-//    }
+
+    // get map of Trigger - {Category - count}
+    public static Map<Trigger, Map<String, Integer>> calculateCategoryCountPerTrigger(List<Entry> entries, List<Trigger> triggerList) {
+        Map<Trigger, Map<String, Integer>> triggerCategoryCount = new HashMap<>();
+        for(Trigger trigger: triggerList) {
+            triggerCategoryCount.put(trigger, new HashMap<>());
+        }
+        for(Entry entry: entries) {
+            List<Trigger> selectedTriggers = entry.getTriggers();
+            for(Trigger selectedTrigger: selectedTriggers) {
+                Map<String, Integer> innerMap =triggerCategoryCount.getOrDefault(selectedTrigger, new HashMap<>());
+                String categoty = entry.getCategory();
+                innerMap.put(categoty, innerMap.getOrDefault(categoty, 0) + 1);
+                triggerCategoryCount.put(selectedTrigger, innerMap);
+            }
+        }
+        return triggerCategoryCount;
+    }
 
 }

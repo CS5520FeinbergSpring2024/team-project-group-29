@@ -261,7 +261,7 @@ public class SelectTrigger extends AppCompatActivity {
                     String newTrigger = addTriggerView.getText().toString();
                     if(!newTrigger.equals("")) {
                         // push it to database
-                        triggersRef.child(Integer.toString(triggerList.size())).setValue(new Trigger(newTrigger));
+                        triggersRef.child(Integer.toString(triggerList.size() + 1)).setValue(new Trigger(newTrigger));
                     }
                     addTriggerView.setText(" + ");
                     Log.e("edit done", "edit done");
