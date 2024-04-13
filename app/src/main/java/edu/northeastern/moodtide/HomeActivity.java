@@ -1,13 +1,12 @@
 package edu.northeastern.moodtide;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,8 +19,9 @@ import edu.northeastern.moodtide.addEntry.SelectionActivity;
 import edu.northeastern.moodtide.analyze.AnalyzeActivity;
 import edu.northeastern.moodtide.getData.GetQuote;
 import edu.northeastern.moodtide.calendarView.CalendarActivity;
-import edu.northeastern.moodtide.getData.GetStreak;
 import edu.northeastern.moodtide.getData.GetTodayCount;
+import edu.northeastern.moodtide.viewModel.StreakViewModel;
+import edu.northeastern.moodtide.viewModel.StreakViewModelFactory;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -37,6 +37,7 @@ public class HomeActivity extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         String uid = getSharedPreferences("memory", Context.MODE_PRIVATE).getString("uid", "");
+        Log.e("UID", uid);
         userRef = database.getReference(uid);
 
         // display daily quote
@@ -44,8 +45,11 @@ public class HomeActivity extends AppCompatActivity {
         thread.start();
 
         // display number of streaks
-        Thread thread1 = new Thread(new GetStreak(this, userRef));
-        thread1.start();
+        StreakViewModelFactory factory = new StreakViewModelFactory(uid);
+        StreakViewModel viewModel = new ViewModelProvider(this, factory).get(StreakViewModel.class);
+        viewModel.getStreak().observe(this, streak -> {
+            updateStreakUI(streak);
+        });
 
         // display today counts
         Thread thread2 = new Thread(new GetTodayCount(this, userRef));
@@ -84,5 +88,10 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+    public void updateStreakUI(String streak) {
+        View todayCountCard = findViewById(R.id.streak_count_card);
+        TextView streakTextView = todayCountCard.findViewById(R.id.streakCount);
+        streakTextView.setText(streak);
     }
 }
