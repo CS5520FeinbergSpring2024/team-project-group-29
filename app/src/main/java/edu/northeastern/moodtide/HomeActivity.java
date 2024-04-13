@@ -19,7 +19,6 @@ import edu.northeastern.moodtide.addEntry.SelectionActivity;
 import edu.northeastern.moodtide.analyze.AnalyzeActivity;
 import edu.northeastern.moodtide.getData.GetQuote;
 import edu.northeastern.moodtide.calendarView.CalendarActivity;
-import edu.northeastern.moodtide.getData.GetTodayCount;
 import edu.northeastern.moodtide.viewModel.StreakViewModel;
 import edu.northeastern.moodtide.viewModel.StreakViewModelFactory;
 import edu.northeastern.moodtide.viewModel.TodayCountViewModel;
