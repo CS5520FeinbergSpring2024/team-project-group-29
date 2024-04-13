@@ -15,6 +15,9 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".analyze.AnalyzeActivity"
+            android:exported="false" />
+        <activity
             android:name=".calendarView.CalendarActivity"
             android:exported="false" />
         <activity
