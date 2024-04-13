@@ -22,6 +22,8 @@ import edu.northeastern.moodtide.calendarView.CalendarActivity;
 import edu.northeastern.moodtide.getData.GetTodayCount;
 import edu.northeastern.moodtide.viewModel.StreakViewModel;
 import edu.northeastern.moodtide.viewModel.StreakViewModelFactory;
+import edu.northeastern.moodtide.viewModel.TodayCountViewModel;
+import edu.northeastern.moodtide.viewModel.TodayCountViewModelFactory;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -52,8 +54,16 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         // display today counts
-        Thread thread2 = new Thread(new GetTodayCount(this, userRef));
-        thread2.start();
+        View todayCountCard = findViewById(R.id.today_count_card);
+        TextView cardTextView = todayCountCard.findViewById(R.id.streakText);
+        cardTextView.setText("emotions today");
+        TodayCountViewModelFactory todayCountViewModelFactory = new TodayCountViewModelFactory(uid);
+        TodayCountViewModel todayCountViewModel = new TodayCountViewModel(uid);
+        todayCountViewModel.getTodayCount().observe(this, todayCount ->{
+            Log.e("TODAYCOUNT", todayCount + "");
+            updateTodayCountUI(todayCount);
+        });
+
 
         // add entry when clicking "+"
         home = findViewById(R.id.home_container);
@@ -90,8 +100,13 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
     public void updateStreakUI(String streak) {
-        View todayCountCard = findViewById(R.id.streak_count_card);
-        TextView streakTextView = todayCountCard.findViewById(R.id.streakCount);
+        View streakCard = findViewById(R.id.streak_count_card);
+        TextView streakTextView = streakCard.findViewById(R.id.streakCount);
         streakTextView.setText(streak);
+    }
+    public void updateTodayCountUI(String todayCount) {
+        View todayCountCard = findViewById(R.id.today_count_card);
+        TextView todayCountTextView = todayCountCard.findViewById(R.id.streakCount);
+        todayCountTextView.setText(todayCount);
     }
 }
