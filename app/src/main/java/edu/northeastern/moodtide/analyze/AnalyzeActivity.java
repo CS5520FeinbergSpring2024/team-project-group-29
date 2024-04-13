@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.Intent;
@@ -38,18 +39,19 @@ import edu.northeastern.moodtide.R;
 import edu.northeastern.moodtide.addEntry.SelectionActivity;
 import edu.northeastern.moodtide.calendarView.CalendarActivity;
 import edu.northeastern.moodtide.object.Entry;
+import edu.northeastern.moodtide.viewModel.EntryOfMonthViewModel;
+import edu.northeastern.moodtide.viewModel.EntryOfMonthViewModelFactory;
 
 public class AnalyzeActivity extends AppCompatActivity {
     String uid;
-    DatabaseReference dataRef;
     int selectedMonth; // 1- based
     View  home, calendar;
-    List<Entry> entriesOfSelectedMonth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analyze);
+        uid = getSharedPreferences("memory", Context.MODE_PRIVATE).getString("uid", "");
 
 
 
@@ -86,8 +88,16 @@ public class AnalyzeActivity extends AppCompatActivity {
                 // Get selected month
                 selectedMonth = position + 1; // 1- based
                 Log.e("SELECTED MONTH", selectedMonth + "");
-                // handle selected month
-                getEntriesOfSelectedMonth();
+                // get entries of selected month
+                EntryOfMonthViewModelFactory factory = new EntryOfMonthViewModelFactory(uid, selectedMonth);
+                EntryOfMonthViewModel viewModel = new ViewModelProvider(AnalyzeActivity.this, factory).get(EntryOfMonthViewModel.class);
+
+
+                // display pie chart
+                viewModel.getEntries().observe(AnalyzeActivity.this, entries -> {
+                    getPieChart(entries);
+
+                });
 
 
             }
@@ -101,40 +111,7 @@ public class AnalyzeActivity extends AppCompatActivity {
 
 
     }
-    public void getEntriesOfSelectedMonth() {
-        entriesOfSelectedMonth = new ArrayList<>();
-        uid = getSharedPreferences("memory", Context.MODE_PRIVATE).getString("uid", "");
-        dataRef = FirebaseDatabase.getInstance().getReference(uid).child("data");
-        dataRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                LocalDate date = LocalDate.parse(snapshot.getKey());
-                if(date.getMonthValue() == selectedMonth) {
-                    for(DataSnapshot entryShot: snapshot.getChildren()) {
-                        entriesOfSelectedMonth.add(entryShot.getValue(Entry.class));
-//                        Log.e("CATEGPRIES", entryShot.getValue(Entry.class).getCategory());
-                    }
-
-                }
-                getPieChart();
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {}
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {}
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
-        });
-
-    }
-    public void getPieChart() {
+    public void getPieChart(List<Entry> entriesOfSelectedMonth) {
         PieChart pieChart = findViewById(R.id.pieChart);
         List<PieEntry> pieEntries = new ArrayList<>();
         List<Integer> categoryColors = new ArrayList<>();
