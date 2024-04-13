@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -23,7 +24,8 @@ import edu.northeastern.moodtide.object.Trigger;
 public class EntryDialog extends DialogFragment {
 
     private TextView category, emotion, triggers, note, index;
-    private Button previous, next, close;
+    private Button close;
+    private ImageView previous, next;
     private List<Entry> entries;
     private int currentIndex=0;
 

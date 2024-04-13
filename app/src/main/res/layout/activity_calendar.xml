@@ -13,8 +13,21 @@
         app:type="one_day_picker"
         app:eventsEnabled="true"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/nav_main"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:headerColor="@color/ocean_theme"
+        app:selectionColor="@color/ocean_theme"
+
+        />
+
+    <include
+        android:id="@+id/nav_main"
+        layout="@layout/bottom_nav_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
