@@ -144,6 +144,7 @@ public class AnalyzeActivity extends AppCompatActivity {
                 labels[index] = trigger.getName();
 
                 Map<String, Integer> categories = triggerCategoryCount.get(trigger);
+                if(categories.isEmpty()) continue; // skip the unselected triggers
                 List<Integer> categoryCounts = new ArrayList<>();
                 List<Integer> categoryColors = new ArrayList<>();
 
@@ -196,7 +197,6 @@ public class AnalyzeActivity extends AppCompatActivity {
                 }
             }
             dataSet.setValueFormatter(new PercentFormatter());
-
             BarData barData = new BarData(dataSet);
             BarChart barChart = findViewById(R.id.barChart);
             barChart.setData(barData);
