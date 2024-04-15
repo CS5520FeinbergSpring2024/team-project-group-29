@@ -8,6 +8,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -28,33 +29,24 @@ public class EntryOfMonthRepository {
 
     public void getEntries(EntryOfMonthRepository.DataStatus dataStatus) {
         databaseReference = FirebaseDatabase.getInstance().getReference(uid).child("data");
-        databaseReference.addChildEventListener(new ChildEventListener() {
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             List<Entry> entryList = new ArrayList<>();
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                LocalDate date = LocalDate.parse(snapshot.getKey());
-                if(date.getMonthValue() == selectedMonth) {
-                    for(DataSnapshot entryShot: snapshot.getChildren()) {
-                        entryList.add(entryShot.getValue(Entry.class));
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dayshot: snapshot.getChildren()) {
+                    LocalDate date = LocalDate.parse(dayshot.getKey());
+                    if(date.getMonthValue() == selectedMonth) {
+                        for(DataSnapshot entryShot: dayshot.getChildren()) {
+                            entryList.add(entryShot.getValue(Entry.class));
 //                        Log.e("CATEGPRIES", entryShot.getValue(Entry.class).getCategory());
+                        }
+                        dataStatus.DataIsLoaded(entryList);
+
                     }
-                    dataStatus.DataIsLoaded(entryList);
 
                 }
-            }
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
             }
 
@@ -63,6 +55,42 @@ public class EntryOfMonthRepository {
 
             }
         });
+//        databaseReference.addChildEventListener(new ChildEventListener() {
+//            List<Entry> entryList = new ArrayList<>();
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                LocalDate date = LocalDate.parse(snapshot.getKey());
+//
+//                if(date.getMonthValue() == selectedMonth) {
+//                    for(DataSnapshot entryShot: snapshot.getChildren()) {
+//                        entryList.add(entryShot.getValue(Entry.class));
+////                        Log.e("CATEGPRIES", entryShot.getValue(Entry.class).getCategory());
+//                    }
+//                    dataStatus.DataIsLoaded(entryList);
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
     }
 
     public interface DataStatus {

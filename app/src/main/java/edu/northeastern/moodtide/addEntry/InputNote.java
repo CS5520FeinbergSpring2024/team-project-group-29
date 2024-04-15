@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -45,6 +46,10 @@ public class InputNote extends AppCompatActivity {
 
         // datebase
         database = FirebaseDatabase.getInstance();
+
+        // top bar text
+        TextView topBarText = findViewById(R.id.text_current_step);
+        topBarText.setText("3");
 
         // retrieve values from last activities
         triggers = (ArrayList<Trigger>) getIntent().getSerializableExtra("triggers");

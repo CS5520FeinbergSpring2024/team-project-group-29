@@ -9,12 +9,15 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -63,6 +66,13 @@ public class AnalyzeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analyze);
         uid = getSharedPreferences("memory", Context.MODE_PRIVATE).getString("uid", "");
+
+        Drawable drawable = ContextCompat.getDrawable(this, R.drawable.stats);
+        drawable.setColorFilter(ContextCompat.getColor(this, R.color.ocean_theme), android.graphics.PorterDuff.Mode.SRC_IN);
+        ImageView analyzeIcon = findViewById(R.id.analyze_icon);
+        analyzeIcon.setImageDrawable(drawable);
+        TextView calendarTitle = findViewById(R.id.analyze_text);
+        calendarTitle.setTextColor(getColor(R.color.ocean_theme));
 
 
         // bottom bar
@@ -130,25 +140,31 @@ public class AnalyzeActivity extends AppCompatActivity {
 
 
         triggerViewModel.getTriggers().observe(AnalyzeActivity.this, triggers -> {
+
+
             Log.e("TRIGGERS EMPTY", triggers.isEmpty() + "");
             Map<Trigger, Map<String, Integer>> triggerCategoryCount = EntryCalculator.calculateCategoryCountPerTrigger(entriesOfSelectedMonth, triggers);
-            Log.e("MAP EMPTY", triggerCategoryCount.isEmpty() + "");
+//            Log.e("MAP EMPTY", triggerCategoryCount.isEmpty() + "");
             List<BarEntry> barEntries = new ArrayList<>();
             List<List<Integer>> allColors = new ArrayList<>();
             String[] labels = new String[triggers.size()];
             int index = 0;
             for (Trigger trigger : triggers) {
+
+
                 // xaxis labels
                 labels[index] = trigger.getName();
 
                 Map<String, Integer> categoriesMap = triggerCategoryCount.get(trigger);
-                if(categoriesMap.isEmpty()) continue; // skip the unselected triggers
+                if(categoriesMap.isEmpty()) {
+                    Log.e("TRIGGER MAP EMPTRY", trigger.getName() + "is emptry");
+                    continue; // skip the unselected triggers
+                }
                 List<Integer> categoryCounts = new ArrayList<>();
                 List<Integer> categoryColors = new ArrayList<>();
 
 
                 // color for each bar
-                Log.e("TRIGGER", trigger.getName());
                 for (String category :  categoriesMap.keySet()) {
                     Log.e("Category", category + "");
                     categoryCounts.add(categoriesMap.get(category));
@@ -171,6 +187,7 @@ public class AnalyzeActivity extends AppCompatActivity {
 
 
             BarDataSet dataSet = new BarDataSet(barEntries, "Emotion by Trigger");
+            dataSet.setColors(new ArrayList<Integer>()); // Clear existing colors
             // Setting colors for each segment in each bar individually
             for (int i = 0; i < barEntries.size(); i++) {
                 BarEntry entry = barEntries.get(i);
@@ -217,8 +234,6 @@ public class AnalyzeActivity extends AppCompatActivity {
                     }
                 }
             });
-
-
             barChart.getDescription().setEnabled(false); // Disable the description label
             barChart.getLegend().setEnabled(false); // Disable the legend
             barChart.invalidate(); // refresh

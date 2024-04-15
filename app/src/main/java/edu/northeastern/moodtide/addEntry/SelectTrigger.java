@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.window.OnBackInvokedDispatcher;
 
 import com.google.android.flexbox.FlexboxLayout;
@@ -53,6 +54,10 @@ public class SelectTrigger extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_trigger);
+
+        // set the top bar
+        TextView topBarText = findViewById(R.id.text_current_step);
+        topBarText.setText("3");
 
         // get database reference for triggers of current user
         String uid = getSharedPreferences("memory", Context.MODE_PRIVATE).getString("uid", "");
@@ -85,12 +90,18 @@ public class SelectTrigger extends AppCompatActivity {
         forwardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // pass on the variables
-                Intent nextIntent = new Intent(SelectTrigger.this, InputNote.class);
-                nextIntent.putExtra("category", currentCategory);
-                nextIntent.putExtra("mood", currentMood);
-                nextIntent.putExtra("triggers", selectedTriggers);
-                startActivity(nextIntent);
+                // handle when no trigger is selected
+                if(selectedTriggers.isEmpty()) {
+                    Toast.makeText(SelectTrigger.this, "You need to select triggers to proceed", Toast.LENGTH_SHORT).show();
+                } else {
+                    // pass on the variables
+                    Intent nextIntent = new Intent(SelectTrigger.this, InputNote.class);
+                    nextIntent.putExtra("category", currentCategory);
+                    nextIntent.putExtra("mood", currentMood);
+                    nextIntent.putExtra("triggers", selectedTriggers);
+                    startActivity(nextIntent);
+                }
+
             }
         });
 

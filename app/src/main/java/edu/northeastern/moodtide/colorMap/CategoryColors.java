@@ -1,6 +1,7 @@
 package edu.northeastern.moodtide.colorMap;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 

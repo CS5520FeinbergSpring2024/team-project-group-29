@@ -82,6 +82,7 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
 
+        // click to change color of icon and text
         Drawable drawable = ContextCompat.getDrawable(this, R.drawable.calendar);
         drawable.setColorFilter(ContextCompat.getColor(this, R.color.ocean_theme), android.graphics.PorterDuff.Mode.SRC_IN);
         ImageView calendarIcon = findViewById(R.id.calendar_icon);
