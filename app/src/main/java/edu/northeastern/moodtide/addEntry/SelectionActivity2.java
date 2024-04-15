@@ -40,15 +40,15 @@ public class SelectionActivity2 extends AppCompatActivity implements CircleMain.
             R.color.ocean6,R.color.ocean7,R.color.ocean8,R.color.ocean9,R.color.ocean10,R.color.ocean11,R.color.ocean12};
     private static final int[] COLORS_FEAR = {R.color.orange1,R.color.orange2,R.color.orange3,R.color.orange4,R.color.orange5,
             R.color.orange6,R.color.orange7,R.color.orange8,R.color.orange9,R.color.orange10};
-    private static final String[] TITLES_ANGER = {"Revolted","Contempt","Jealous","Resentful","Aggravated","Annoyed",
-            "Frustrated","Agitated","Hostile","Hate"};
-    private static final String[] TITLES_JOY = {"Rapture","Enchanted","Jubilation","Euphoric","Zeal","Excited","Hopeful","Eager",
+    private static final String[] TITLES_ANGER = {"Revolted","Contemptuous","Jealous","Resentful","Aggravated","Annoyed",
+            "Frustrated","Agitated","Hostile","Hateful"};
+    private static final String[] TITLES_JOY = {"Rapturous","Enchanted","Jubilant","Euphoric","Zealous","Excited","Hopeful","Eager",
             "Illustrious","Triumphant","Blissful","Jovial","Delighted","Amused","Satisfied","Pleased"};
-    private static final String[] TITLES_LOVE = {"Peaceful","Relieved","Compassionate","Caring","Infatuation","Passion","Attracted",
-            "Sentimental","Fondness","Romantic"};
+    private static final String[] TITLES_LOVE = {"Peaceful","Relieved","Compassionate","Caring","Infatuated","Passionate","Attracted",
+            "Sentimental","Fond","Romantic"};
     private static final String[] TITLES_SURPRISE = {"Shocked","Stunned","Disillusioned","Perplexed","Astonished","Awestruck","Speechless",
             "Astounded","Stimulated","Touched"};
-    private static final String[] TITLES_SADNESS = {"Agony","Hurt","Depressed","Sorrow","Dismayed","Displeased","Regretful","Guilty","Isolated",
+    private static final String[] TITLES_SADNESS = {"Agonized","Hurt","Depressed","Sorrowful","Dismayed","Displeased","Regretful","Guilty","Isolated",
             "Lonely","Grief","Powerless"};
     private static final String[] TITLES_FEAR = {"Dread","Mortified","Anxious","Worried","Inadequate","Inferior","Hysterical","Panic",
             "Helpless","Frightened"};
