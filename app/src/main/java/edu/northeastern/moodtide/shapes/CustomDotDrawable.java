@@ -54,18 +54,18 @@ public class CustomDotDrawable extends Drawable {
             int row = i / COLS;
             int col = i % COLS;
 
-            Log.e("row",Integer.toString(row));
-            Log.e("column",Integer.toString(col));
+            //Log.e("row",Integer.toString(row));
+            //Log.e("column",Integer.toString(col));
 
 
             float x = (col + 1) * horizontalSpacing + col * dotSize;
             float y = (row + 1) * verticalSpacing + row * dotSize;
-            Log.e("x",Float.toString(x));
-            Log.e("y",Float.toString(y));
+            //Log.e("x",Float.toString(x));
+            //Log.e("y",Float.toString(y));
 
             if (i < numDots) {
                 dotPaint.setColor(dotColors[i]);
-                Log.e("color",Integer.toString(dotColors[i]));
+                //Log.e("color",Integer.toString(dotColors[i]));
                 canvas.drawCircle(x + dotSize / 2, y + dotSize / 2, dotSize / 2, dotPaint);
             } else {
                 // Draw transparent dot (or white dot) to hide excess dots
