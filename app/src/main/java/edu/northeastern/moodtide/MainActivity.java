@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.northeastern.moodtide.addEntry.SelectionActivity;
+import edu.northeastern.moodtide.notification.NotificationHelper;
 import edu.northeastern.moodtide.object.Trigger;
 import edu.northeastern.moodtide.object.User;
 
@@ -55,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        NotificationHelper.createNotificationChannel(this);
 
         emailInput = findViewById(R.id.emailEditText);
         passwordInput = findViewById(R.id.passwordEditText);
