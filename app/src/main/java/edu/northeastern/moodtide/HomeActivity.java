@@ -61,27 +61,27 @@ public class HomeActivity extends AppCompatActivity {
         Log.e("UID", uid);
         userRef = database.getReference(uid);
 
-//        // display daily quote
-//        Thread thread = new Thread(new GetQuote(this));
-//        thread.start();
-//
-//        // display number of streaks
-//        StreakViewModelFactory factory = new StreakViewModelFactory(uid);
-//        StreakViewModel viewModel = new ViewModelProvider(this, factory).get(StreakViewModel.class);
-//        viewModel.getStreak().observe(this, streak -> {
-//            updateStreakUI(streak);
-//        });
-//
-//        // display today counts
-//        View todayCountCard = findViewById(R.id.today_count_card);
-//        TextView cardTextView = todayCountCard.findViewById(R.id.streakText);
-//        cardTextView.setText("emotions today");
-//        TodayCountViewModelFactory todayCountViewModelFactory = new TodayCountViewModelFactory(uid);
-//        TodayCountViewModel todayCountViewModel = new TodayCountViewModel(uid);
-//        todayCountViewModel.getTodayCount().observe(this, todayCount ->{
-//            Log.e("TODAYCOUNT", todayCount + "");
-//            updateTodayCountUI(todayCount);
-//        });
+        // display daily quote
+        Thread thread = new Thread(new GetQuote(this));
+        thread.start();
+
+        // display number of streaks
+        StreakViewModelFactory factory = new StreakViewModelFactory(uid);
+        StreakViewModel viewModel = new ViewModelProvider(this, factory).get(StreakViewModel.class);
+        viewModel.getStreak().observe(this, streak -> {
+            updateStreakUI(streak);
+        });
+
+        // display today counts
+        View todayCountCard = findViewById(R.id.today_count_card);
+        TextView cardTextView = todayCountCard.findViewById(R.id.streakText);
+        cardTextView.setText("emotions today");
+        TodayCountViewModelFactory todayCountViewModelFactory = new TodayCountViewModelFactory(uid);
+        TodayCountViewModel todayCountViewModel = new TodayCountViewModel(uid);
+        todayCountViewModel.getTodayCount().observe(this, todayCount ->{
+            Log.e("TODAYCOUNT", todayCount + "");
+            updateTodayCountUI(todayCount);
+        });
 
 
         // add entry when clicking "+"

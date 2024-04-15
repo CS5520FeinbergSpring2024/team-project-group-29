@@ -45,6 +45,7 @@ import edu.northeastern.moodtide.HomeActivity;
 import edu.northeastern.moodtide.R;
 import edu.northeastern.moodtide.addEntry.SelectionActivity;
 import edu.northeastern.moodtide.calendarView.CalendarActivity;
+import edu.northeastern.moodtide.colorMap.CategoryColors;
 import edu.northeastern.moodtide.object.Entry;
 import edu.northeastern.moodtide.object.Trigger;
 import edu.northeastern.moodtide.viewModel.EntryOfMonthViewModel;
@@ -62,7 +63,6 @@ public class AnalyzeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analyze);
         uid = getSharedPreferences("memory", Context.MODE_PRIVATE).getString("uid", "");
-
 
 
         // bottom bar
@@ -108,7 +108,6 @@ public class AnalyzeActivity extends AppCompatActivity {
                     // display bar chart
                     getBarChart(entries);
 
-
                 });
 
 
@@ -126,7 +125,6 @@ public class AnalyzeActivity extends AppCompatActivity {
 
     public void getBarChart(List<Entry> entriesOfSelectedMonth) {
         // get the triggers first
-
         TriggerViewModelFactory triggerViewModelFactory = new TriggerViewModelFactory(uid);
         TriggerViewModel triggerViewModel = new ViewModelProvider(AnalyzeActivity.this, triggerViewModelFactory).get(TriggerViewModel.class);
 
@@ -143,36 +141,21 @@ public class AnalyzeActivity extends AppCompatActivity {
                 // xaxis labels
                 labels[index] = trigger.getName();
 
-                Map<String, Integer> categories = triggerCategoryCount.get(trigger);
-                if(categories.isEmpty()) continue; // skip the unselected triggers
+                Map<String, Integer> categoriesMap = triggerCategoryCount.get(trigger);
+                if(categoriesMap.isEmpty()) continue; // skip the unselected triggers
                 List<Integer> categoryCounts = new ArrayList<>();
                 List<Integer> categoryColors = new ArrayList<>();
 
-                for (String category :  categories.keySet()) {
+
+                // color for each bar
+                Log.e("TRIGGER", trigger.getName());
+                for (String category :  categoriesMap.keySet()) {
                     Log.e("Category", category + "");
-                    categoryCounts.add(categories.get(category));
-                    switch (category) {
-                        case "Anger":
-                            categoryColors.add(ContextCompat.getColor(this, R.color.pink_theme));
-                            Log.e("Anger here", "anger here");
-                            break;
-                        case "Fear":
-                            categoryColors.add(ContextCompat.getColor(this, R.color.orange_theme));
-                        case "Love":
-                            categoryColors.add(ContextCompat.getColor(this, R.color.yellow_theme));
-                            break;
-                        case "Joy":
-                            categoryColors.add(ContextCompat.getColor(this, R.color.green_theme));
-                            break;
-                        case "Surprise":
-                            categoryColors.add(ContextCompat.getColor(this, R.color.aqua_theme));
-                            break;
-                        case "Sadness":
-                            categoryColors.add(ContextCompat.getColor(this, R.color.ocean_theme));
-                            break;
-                        default:
-                            categoryColors.add(ContextCompat.getColor(this, R.color.white));
-                    }
+                    categoryCounts.add(categoriesMap.get(category));
+                    int color = CategoryColors.getColor(this, category);
+                    Log.e("COLOR", String.format("#%08X", (color & 0xFFFFFFFF)));
+                    categoryColors.add(color);
+
                 }
 
                 // convert to list of float
@@ -194,9 +177,10 @@ public class AnalyzeActivity extends AppCompatActivity {
                 List<Integer> colors = allColors.get(i);
                 for (int valueIndex = 0; valueIndex < entry.getYVals().length; valueIndex++) {
                     dataSet.addColor(colors.get(valueIndex));  // Directly setting each segment's color
+                    Log.e("SET COLOR", String.format("#%08X", (colors.get(valueIndex) & 0xFFFFFFFF)));
+
                 }
             }
-            dataSet.setValueFormatter(new PercentFormatter());
             BarData barData = new BarData(dataSet);
             BarChart barChart = findViewById(R.id.barChart);
             barChart.setData(barData);
@@ -209,7 +193,7 @@ public class AnalyzeActivity extends AppCompatActivity {
             xAxis.setDrawGridLines(false); // turn off grid lines
 //            barChart.setFitBars(true); // make the x-axis fit exactly all bars
 
-            // display percantage of each emotion
+            // display percantage of each category
             dataSet.setValueFormatter(new ValueFormatter() {
                 @Override
                 public String getBarStackedLabel(float value, BarEntry entry) {
@@ -247,38 +231,18 @@ public class AnalyzeActivity extends AppCompatActivity {
         PieChart pieChart = findViewById(R.id.pieChart);
         List<PieEntry> pieEntries = new ArrayList<>();
         List<Integer> categoryColors = new ArrayList<>();
-        Log.e("HERE", "here");
         // get map - key being category, value being count
         Map<String, Integer> categoryCountsMap = EntryCalculator.calculateCategoryCount(entriesOfSelectedMonth);
         Log.e("MAP IS EMPTY", categoryCountsMap.isEmpty() + "");
         for (Map.Entry<String, Integer> entry : categoryCountsMap.entrySet()) {
-            pieEntries.add(new PieEntry(entry.getValue().floatValue(), entry.getKey()));
-            switch (entry.getKey()) {
-                case "Anger":
-                    categoryColors.add(ContextCompat.getColor(this, R.color.pink_theme));
-                    Log.e("Anger here", "anger here");
-                    break;
-                case "Fear":
-                    categoryColors.add(ContextCompat.getColor(this, R.color.orange_theme));
-                case "Love":
-                    categoryColors.add(ContextCompat.getColor(this, R.color.yellow_theme));
-                    break;
-                case "Joy":
-                    categoryColors.add(ContextCompat.getColor(this, R.color.green_theme));
-                    break;
-                case "Surprise":
-                    categoryColors.add(ContextCompat.getColor(this, R.color.aqua_theme));
-                    break;
-                case "Sadness":
-                    categoryColors.add(ContextCompat.getColor(this, R.color.ocean_theme));
-                    break;
-                default:
-                    categoryColors.add(ContextCompat.getColor(this, R.color.white));
-            }
+            String category = entry.getKey();
+            pieEntries.add(new PieEntry(entry.getValue().floatValue(), category));
+            categoryColors.add(CategoryColors.getColor(this, category));
+
         }
 
         PieDataSet dataSet = new PieDataSet(pieEntries, "Emotion Categories");
-        dataSet.setColors(categoryColors);
+        dataSet.setColors(categoryColors); // set segments color
         PieData data = new PieData(dataSet);
         data.setValueFormatter(new PercentFormatter(pieChart));
         data.setValueTextSize(11f); // set percentage text size
