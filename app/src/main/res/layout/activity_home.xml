@@ -18,37 +18,36 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <LinearLayout
-        android:layout_width="match_parent"
+    <edu.northeastern.moodtide.welcome.FingerPrintImageView
+        android:id="@+id/fingerprintImage"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/nav_main">
+        android:src="@drawable/fingerprint_colored"
+        android:layout_centerInParent="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <include
+        android:id="@+id/streak_count_card"
+        layout="@layout/streak_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/today_count_card"
+        app:layout_constraintBottom_toTopOf="@+id/nav_main"
+        android:layout_marginBottom="10dp">
 
-        <include
-            android:id="@+id/streak_count_card"
-            layout="@layout/streak_card"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginBottom="10dp"
-            android:layout_margin="5dp">
-
-        </include>
-        <include
-            android:id="@+id/today_count_card"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            layout="@layout/streak_card"
-            android:layout_margin="5dp"
-            app:layout_constraintStart_toEndOf="@+id/streak_count_card"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/nav_main"
-            android:layout_marginBottom="10dp">
-        </include>
-
-    </LinearLayout>
-
+    </include>
+    <include
+        android:id="@+id/today_count_card"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        layout="@layout/streak_card"
+        app:layout_constraintStart_toEndOf="@+id/streak_count_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/nav_main"
+        android:layout_marginBottom="10dp">
+    </include>
 
     <include
         android:id="@+id/nav_main"
