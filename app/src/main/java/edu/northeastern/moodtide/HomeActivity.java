@@ -3,7 +3,6 @@ package edu.northeastern.moodtide;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -14,8 +13,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,7 +32,7 @@ import java.util.Calendar;
 
 import edu.northeastern.moodtide.addEntry.SelectionActivity;
 import edu.northeastern.moodtide.analyze.AnalyzeActivity;
-import edu.northeastern.moodtide.getData.GetQuote;
+import edu.northeastern.moodtide.welcome.GetQuote;
 import edu.northeastern.moodtide.calendarView.CalendarActivity;
 import edu.northeastern.moodtide.notification.NotificationReceiver;
 import edu.northeastern.moodtide.viewModel.StreakViewModel;
@@ -60,6 +59,46 @@ public class HomeActivity extends AppCompatActivity {
         String uid = getSharedPreferences("memory", Context.MODE_PRIVATE).getString("uid", "");
         Log.e("UID", uid);
         userRef = database.getReference(uid);
+
+        // fingerprint animation
+        ImageView fingerprint = findViewById(R.id.fingerprintImage);
+        fingerprint.animate().alpha(0.5f).setDuration(500);
+
+        fingerprint.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    // Start the animation to fade in and enlarge the fingerprint image
+                    fingerprint.animate()
+                            .scaleX(1.1f).scaleY(1.1f) // Scale up to 110%
+                            .alpha(1.0f) // Animate alpha to fully visible
+                            .setDuration(500)
+                            .withEndAction(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // Optionally trigger something on animation end, like transitioning to another activity
+                                    startActivity(new Intent(HomeActivity.this, SelectionActivity.class));
+                                }
+                            });
+                    return true;
+                } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
+                    // Reverse the animation on finger lift
+                    fingerprint.animate()
+                            .scaleX(1.0f).scaleY(1.0f) // Scale back to normal size
+                            .alpha(0.5f) // Animate alpha back to semi-transparent
+                            .setDuration(500);
+                    return true;
+
+                }
+                return false;
+            }
+        });
+
+
+
+
+
+
 
         // display daily quote
         Thread thread = new Thread(new GetQuote(this));

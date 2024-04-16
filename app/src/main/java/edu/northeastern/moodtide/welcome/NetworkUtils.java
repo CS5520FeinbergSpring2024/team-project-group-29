@@ -1,4 +1,4 @@
-package edu.northeastern.moodtide.getData;
+package edu.northeastern.moodtide.welcome;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
