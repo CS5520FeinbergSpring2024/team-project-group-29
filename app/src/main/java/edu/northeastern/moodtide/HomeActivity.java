@@ -12,6 +12,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -127,16 +128,14 @@ public class HomeActivity extends AppCompatActivity {
             updateTodayCountUI(todayCount);
         });
 
-
-        // add entry when clicking "+"
+        // change color of icon and text that is the current page
         home = findViewById(R.id.home_container);
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, SelectionActivity.class);
-                startActivity(intent);
-            }
-        });
+        Drawable drawable = ContextCompat.getDrawable(this, R.drawable.home);
+        drawable.setColorFilter(ContextCompat.getColor(this, R.color.ocean_theme), android.graphics.PorterDuff.Mode.SRC_IN);
+        ImageView homeIcon = findViewById(R.id.home_icon);
+        homeIcon.setImageDrawable(drawable);
+        TextView homeTitle = findViewById(R.id.home_title);
+        homeTitle.setTextColor(getColor(R.color.ocean_theme));
 
         // calendar activity
         calendar = findViewById(R.id.calendar_container);
