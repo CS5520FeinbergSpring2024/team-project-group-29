@@ -91,10 +91,6 @@ public class HomeActivity extends AppCompatActivity {
 
         // add entry when clicking "+"
         home = findViewById(R.id.home_container);
-        homeIcon = findViewById(R.id.home_icon);
-        homeTitle = findViewById(R.id.home_title);
-        homeIcon.setImageResource(R.drawable.add);
-        homeTitle.setText("Add");
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,40 +172,43 @@ public class HomeActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 savedTime = dataSnapshot.getValue(String.class);
                 Log.e("TIME",savedTime);
+                if(savedTime.equals("null")){
+                    CustomTimePickerDialog.show(getApplicationContext(), new CustomTimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(int hours, int minutes) {
+                            selectedHour = hours;
+                            selectedMinute = minutes;
+                            Log.e("TIME",selectedHour+" : "+selectedMinute);
+                            timeRef.setValue(selectedHour+":"+selectedMinute);
+                            setUpNotification(selectedHour, selectedMinute);
+                        }
+                    });
+                }else{
+                    String[] timeComponents = savedTime.split(":");
+                    selectedHour = Integer.parseInt(timeComponents[0]);
+                    selectedMinute = Integer.parseInt(timeComponents[1]);
+                    setUpNotification(selectedHour, selectedMinute);
+                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {}
         });
-        if(savedTime.equals("null")){
-            CustomTimePickerDialog.show(this, new CustomTimePickerDialog.OnTimeSetListener() {
-                @Override
-                public void onTimeSet(int hours, int minutes) {
-                    selectedHour = hours;
-                    selectedMinute = minutes;
-                    Log.e("TIME",selectedHour+" : "+selectedMinute);
-                    timeRef.setValue(selectedHour+":"+selectedMinute);
-                    setUpNotification();
-                }
-            });
-        }else{
-            String[] timeComponents = savedTime.split(":");
-            selectedHour = Integer.parseInt(timeComponents[0]);
-            selectedMinute = Integer.parseInt(timeComponents[1]);
-            setUpNotification();
-        }
     }
 
-    public void setUpNotification(){
+    public void setUpNotification(int hour, int minute){
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent notificationIntent = new Intent(this, NotificationReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
-        calendar.set(Calendar.MINUTE, selectedMinute);
-        //calendar.set(Calendar.HOUR_OF_DAY, 20);
-        //calendar.set(Calendar.MINUTE, 58);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
+        if (calendar.getTimeInMillis() <= System.currentTimeMillis()) {
+            // If in the past, add one day to the calendar
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        Log.e("NOTI", calendar.toString());
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),pendingIntent);
     }
