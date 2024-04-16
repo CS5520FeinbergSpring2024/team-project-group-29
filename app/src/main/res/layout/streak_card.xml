@@ -1,39 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-        <ImageView
-            android:id="@+id/flameIcon"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/flame"
-            android:maxWidth="20dp"/>
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:elevation="0dp">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/streak_card"
+        android:background="@drawable/trigger_text_view_border"
+        android:padding="5dp">
+        <!--        <ImageView-->
+        <!--            android:id="@+id/flameIcon"-->
+        <!--            android:layout_width="70dp"-->
+        <!--            android:layout_height="70dp"-->
+        <!--            android:src="@drawable/flame"-->
+        <!--            android:maxWidth="20dp"/>-->
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="invisible"/>
 
         <TextView
             android:id="@+id/streakCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/flameIcon"
-            android:layout_marginStart="8dp"
             android:text="0"
-            android:textSize="34sp"
-            android:textStyle="bold" />
-
-        <TextView
+            android:textSize="60sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
+        <ImageView
             android:id="@+id/streakText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/flameIcon"
-            android:layout_below="@id/streakCount"
-            android:layout_marginStart="8dp"
-            android:text="day streak"
-            android:textSize="18sp" />
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/day_streak_text"
+            android:layout_marginStart="15dp"
+            android:maxWidth="20dp"
+            android:layout_gravity="center" />
 
-    </RelativeLayout>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="invisible"/>
 
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/streakText"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_toEndOf="@id/flameIcon"-->
+        <!--            android:layout_below="@id/streakCount"-->
+        <!--            android:layout_marginStart="8dp"-->
+        <!--            android:text="day streak"-->
+        <!--            android:textSize="18sp" />-->
+
+    </LinearLayout>
 </androidx.cardview.widget.CardView>

@@ -12,12 +12,16 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.Manifest;
@@ -65,43 +69,10 @@ public class HomeActivity extends AppCompatActivity {
         Log.e("UID", uid);
         userRef = database.getReference(uid);
 
+
         // fingerprint animation
         ImageView fingerprint = findViewById(R.id.fingerprintImage);
         fingerprint.animate().alpha(0.5f).setDuration(500);
-
-        fingerprint.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    // Start the animation to fade in and enlarge the fingerprint image
-                    fingerprint.animate()
-                            .scaleX(1.1f).scaleY(1.1f) // Scale up to 110%
-                            .alpha(1.0f) // Animate alpha to fully visible
-                            .setDuration(500)
-                            .withEndAction(new Runnable() {
-                                @Override
-                                public void run() {
-                                    // Optionally trigger something on animation end, like transitioning to another activity
-                                    startActivity(new Intent(HomeActivity.this, SelectionActivity.class));
-                                }
-                            });
-                    return true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
-                    // Reverse the animation on finger lift
-                    fingerprint.animate()
-                            .scaleX(1.0f).scaleY(1.0f) // Scale back to normal size
-                            .alpha(0.5f) // Animate alpha back to semi-transparent
-                            .setDuration(500);
-                    return true;
-
-                }
-                return false;
-            }
-        });
-
-
-
-
 
 
 
@@ -110,16 +81,28 @@ public class HomeActivity extends AppCompatActivity {
         thread.start();
 
         // display number of streaks
+        View streakCountCard = findViewById(R.id.streak_count_card);
+        LinearLayout streakView = streakCountCard.findViewById(R.id.streak_card);
+        GradientDrawable background = (GradientDrawable) streakView.getBackground();
+        background.setStroke(4,  getColor(R.color.ocean_theme));
+
+        View todayCountCard = findViewById(R.id.today_count_card);
+        LinearLayout todayView = todayCountCard.findViewById(R.id.streak_card);
+        GradientDrawable background2 = (GradientDrawable) todayView.getBackground();
+        background2.setStroke(4,  getColor(R.color.ocean_theme));
+
         StreakViewModelFactory factory = new StreakViewModelFactory(uid);
         StreakViewModel viewModel = new ViewModelProvider(this, factory).get(StreakViewModel.class);
         viewModel.getStreak().observe(this, streak -> {
             updateStreakUI(streak);
         });
 
-        // display today counts
-        View todayCountCard = findViewById(R.id.today_count_card);
-        TextView cardTextView = todayCountCard.findViewById(R.id.streakText);
-        cardTextView.setText("emotions today");
+        ImageView imageView = todayCountCard.findViewById(R.id.streakText);
+        imageView.setImageResource(R.drawable.emotion_today_text);
+
+//        TextView cardTextView = todayCountCard.findViewById(R.id.streakText);
+//        cardTextView.setText("emotions today");
+
         TodayCountViewModelFactory todayCountViewModelFactory = new TodayCountViewModelFactory(uid);
         TodayCountViewModel todayCountViewModel = new TodayCountViewModel(uid);
         todayCountViewModel.getTodayCount().observe(this, todayCount ->{
