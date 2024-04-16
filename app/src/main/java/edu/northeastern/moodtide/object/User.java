@@ -1,6 +1,7 @@
 package edu.northeastern.moodtide.object;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,6 +11,7 @@ public class User {
     private HashMap<String, HashMap<String, Entry>> data;
     private int streak;
     private String lastDate;
+    private String notificationTime;
     private List<Trigger> myTriggers;
 
     public User() {
@@ -17,6 +19,7 @@ public class User {
         data = new HashMap<>();
         streak = 0;
         lastDate = "null";
+        notificationTime = "null";
         myTriggers = new ArrayList<>();
     }
 
@@ -25,6 +28,7 @@ public class User {
         this.data = new HashMap<>();
         this.streak = 0;
         this.lastDate = "null";
+        this.notificationTime = "null";
         this.myTriggers = new ArrayList<>();
     }
     public User(String id, List<Trigger> myTriggers) {
@@ -32,6 +36,7 @@ public class User {
         this.data = new HashMap<>();
         this.streak = 0;
         this.lastDate = "null";
+        this.notificationTime = "null";
         this.myTriggers = myTriggers;
 
     }
@@ -56,9 +61,13 @@ public class User {
 
     public void setStreak(int streak){ this.streak=streak; }
 
+    public void setNotificationTime(String notificationTime){this.notificationTime=notificationTime;}
+
     public String getLastDate(){ return lastDate; }
 
     public void setLastDate(String lastDate){ this.lastDate=lastDate;}
+
+    public String getNotificationTime(){return this.notificationTime;}
 
     public List<Trigger> getMyTriggers() {
         return myTriggers;

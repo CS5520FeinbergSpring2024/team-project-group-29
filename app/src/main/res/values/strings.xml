@@ -1,12 +1,10 @@
 <resources>
     <string name="app_name">MoodTide</string>
     <string name="resetPassword"><u>Forgot password?</u></string>
-    <string name="test">This is a test string. This is a test string. This is a test string.
-        This is a test string. This is a test string. This is a test string. This is a test string.
-        This is a test string. This is a test string. This is a test string. This is a test string. </string>
+    <string name="test">This is a test string.</string>
 
     <string name="Revolted">feeling unpleasantly shocked or disgusted</string>
-    <string name="Contempt">feeling a combination of anger and disgust</string>
+    <string name="Contemptuous">feeling a combination of anger and disgust</string>
     <string name="Jealous">feeling or showing envy of someone or their achievements and advantages</string>
     <string name="Resentful">feeling bitter or angry about something you think is unfair</string>
     <string name="Aggravated">seriously offended</string>
@@ -14,15 +12,15 @@
     <string name="Frustrated">upset because you cannot do something you want to do</string>
     <string name="Agitated">very troubled and restless</string>
     <string name="Hostile">being unfriendly or opposed to someone or something</string>
-    <string name="Hate">intense dislike for something or someone</string>
+    <string name="Hateful">intense dislike for something or someone</string>
 
-    <string name="Rapture">feeling of intense pleasure or joy</string>
+    <string name="Rapturous">feeling of intense pleasure or joy</string>
     <string name="Enchanted">filled with delight</string>
-    <string name="Jubilation">being in great joy</string>
+    <string name="Jubilant">being in great joy</string>
     <string name="Blissful">feeling full of joy</string>
     <string name="Delighted">feeling lifted by joy</string>
     <string name="Euphoric">intense happiness and s sense of wellbeing</string>
-    <string name="Zeal">great energy or enthusiasm in pursuit of a cause or an objective</string>
+    <string name="Zealous">great energy or enthusiasm in pursuit of a cause or an objective</string>
     <string name="Excited">enthusiastic about something in the future</string>
     <string name="Hopeful">optimistic that something good will happen</string>
     <string name="Eager">impatiently wanting to do or get something</string>
@@ -37,11 +35,11 @@
     <string name="Relieved">feeling at ease after an unpleasant feeling goes away</string>
     <string name="Compassionate">showing care and concern for someone</string>
     <string name="Caring">displaying kindness and concern for others</string>
-    <string name="Infatuation">intense passion or admiration for someone or something</string>
-    <string name="Passion">intense engagement and commitment to someone or something</string>
+    <string name="Infatuated">intense passion or admiration for someone or something</string>
+    <string name="Passionate">intense engagement and commitment to someone or something</string>
     <string name="Attracted">having a liking for or interest in someone or something</string>
     <string name="Sentimental">of or prompted by feelings of tenderness, sadness, or nostalgia</string>
-    <string name="Fondness">affection or liking for someone or something</string>
+    <string name="Fond">affection or liking for someone or something</string>
     <string name="Romantic">conducive to or characterized by the expression of love</string>
 
     <string name="Shocked">experiencing extreme surprise</string>
@@ -55,10 +53,10 @@
     <string name="Stimulated">made excited and interested about something</string>
     <string name="Touched">being emotionally stirred or moved</string>
 
-    <string name="Agony">extreme and prolonged pain and suffering</string>
+    <string name="Agonized">extreme and prolonged pain and suffering</string>
     <string name="Hurt">mental or emotional distress or anguish</string>
     <string name="Depressed">extremely unhappy and dispirited</string>
-    <string name="Sorrow">intense sadness</string>
+    <string name="Sorrowful">intense sadness</string>
     <string name="Dismayed">feelings of alarmed concern or dismay</string>
     <string name="Displeased">feeling annoyance and displeasure</string>
     <string name="Regretful">feeling bad when you do something that you wish you had not</string>

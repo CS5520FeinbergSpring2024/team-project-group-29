@@ -25,8 +25,11 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
@@ -34,6 +37,7 @@ import edu.northeastern.moodtide.addEntry.SelectionActivity;
 import edu.northeastern.moodtide.analyze.AnalyzeActivity;
 import edu.northeastern.moodtide.welcome.GetQuote;
 import edu.northeastern.moodtide.calendarView.CalendarActivity;
+import edu.northeastern.moodtide.notification.CustomTimePickerDialog;
 import edu.northeastern.moodtide.notification.NotificationReceiver;
 import edu.northeastern.moodtide.viewModel.StreakViewModel;
 import edu.northeastern.moodtide.viewModel.StreakViewModelFactory;
@@ -45,8 +49,9 @@ public class HomeActivity extends AppCompatActivity {
     LinearLayout calendar, home, analyze;
     TextView homeTitle;
     ImageView homeIcon;
-    DatabaseReference userRef;
+    DatabaseReference userRef, timeRef;
     int selectedHour, selectedMinute;
+    String savedTime ="null";
     private static final int PERMISSION_REQUEST_POST_NOTIFICATIONS = 100;
 
     @Override
@@ -180,12 +185,10 @@ public class HomeActivity extends AppCompatActivity {
             }else{
                 Log.e("NOTI","permission already granted");
                 getNotificationTime();
-                setUpNotification();
             }
         }else{
             Log.e("NOTI","no need to ask for permission");
             getNotificationTime();
-            setUpNotification();
         }
     }
 
@@ -197,7 +200,6 @@ public class HomeActivity extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Log.e("NOTI","ask for permission successful");
                 getNotificationTime();
-                setUpNotification();
             } else {
                 // Permission denied, inform the user
                 Toast.makeText(this, "You will not be receiving your daily reminder", Toast.LENGTH_SHORT).show();
@@ -206,36 +208,33 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void getNotificationTime(){
-        selectedHour = getSharedPreferences("memory", Context.MODE_PRIVATE).getInt("hour", -1);
-        selectedMinute = getSharedPreferences("memory", Context.MODE_PRIVATE).getInt("minute", -1);
-        Log.e("TIME",selectedHour+" : "+selectedMinute);
-        if(selectedHour==-1 ||selectedMinute==-1){
-            // Get current time
-            final Calendar calendar = Calendar.getInstance();
-            int hour = calendar.get(Calendar.HOUR_OF_DAY);
-            int minute = calendar.get(Calendar.MINUTE);
 
-            // Create a TimePickerDialog
-            TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+        timeRef = userRef.child("notificationTime");
+        timeRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                savedTime = dataSnapshot.getValue(String.class);
+                Log.e("TIME",savedTime);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
+        if(savedTime.equals("null")){
+            CustomTimePickerDialog.show(this, new CustomTimePickerDialog.OnTimeSetListener() {
                 @Override
-                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    // Display the selected time
-                    selectedHour = hourOfDay;
-                    selectedMinute = minute;
-                    SharedPreferences sharedPreferences = getSharedPreferences("memory", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putInt("hour", selectedHour);
-                    editor.putInt("minute", selectedMinute);
-                    editor.apply();
+                public void onTimeSet(int hours, int minutes) {
+                    selectedHour = hours;
+                    selectedMinute = minutes;
                     Log.e("TIME",selectedHour+" : "+selectedMinute);
+                    timeRef.setValue(selectedHour+":"+selectedMinute);
+                    setUpNotification();
                 }
-            }, hour, minute, true);
-
-            timePickerDialog.setTitle("Select a time for your daily reminder");
-            timePickerDialog.setCancelable(false);
-
-            // Show the dialog
-            timePickerDialog.show();
+            });
+        }else{
+            String[] timeComponents = savedTime.split(":");
+            selectedHour = Integer.parseInt(timeComponents[0]);
+            selectedMinute = Integer.parseInt(timeComponents[1]);
+            setUpNotification();
         }
     }
 
@@ -245,14 +244,11 @@ public class HomeActivity extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE);
 
         Calendar calendar = Calendar.getInstance();
-        //calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
-        //calendar.set(Calendar.MINUTE, selectedMinute);
-        calendar.set(Calendar.HOUR_OF_DAY, 20);
-        calendar.set(Calendar.MINUTE, 58);
+        calendar.set(Calendar.HOUR_OF_DAY, selectedHour);
+        calendar.set(Calendar.MINUTE, selectedMinute);
+        //calendar.set(Calendar.HOUR_OF_DAY, 20);
+        //calendar.set(Calendar.MINUTE, 58);
         calendar.set(Calendar.SECOND, 0);
-
-       long triggerTimeMillis = System.currentTimeMillis() + 20000;
-       // alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),pendingIntent);
     }
