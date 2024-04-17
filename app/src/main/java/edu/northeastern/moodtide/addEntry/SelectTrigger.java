@@ -155,6 +155,7 @@ public class SelectTrigger extends AppCompatActivity {
     public void initiateDefinedTriggers() {
 //        // predefined triggers
         triggerList = new ArrayList<>();
+        selectedTriggers = new ArrayList<>();
 
         // retrieve trigger from database
         triggersRef.addChildEventListener(new ChildEventListener() {
@@ -171,7 +172,6 @@ public class SelectTrigger extends AppCompatActivity {
 
 
                 // click to select multiple triggers
-                selectedTriggers = new ArrayList<>();
                 final boolean[] isHighlighted = {false};
                 textView.setOnClickListener(new View.OnClickListener() {
                     @Override
