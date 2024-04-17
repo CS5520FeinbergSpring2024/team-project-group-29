@@ -49,7 +49,7 @@ public class InputNote extends AppCompatActivity {
 
         // top bar text
         TextView topBarText = findViewById(R.id.text_current_step);
-        topBarText.setText("3");
+        topBarText.setText("4");
 
         // retrieve values from last activities
         triggers = (ArrayList<Trigger>) getIntent().getSerializableExtra("triggers");
