@@ -12,12 +12,13 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+//Customized icon drawable to show the colored dots corresponding to the day's emotions
 public class CustomDotDrawable extends Drawable {
 
     private static final int MAX_DOTS = 6;
     private static final int ROWS = 2;
     private static final int COLS = 3;
-    private static final int DOT_SIZE_PERCENTAGE = 30; // Percentage of canvas width for dot size
+    private static final int DOT_SIZE_PERCENTAGE = 33;
 
     private int numDots;
     private int[] dotColors;
@@ -54,21 +55,13 @@ public class CustomDotDrawable extends Drawable {
             int row = i / COLS;
             int col = i % COLS;
 
-            //Log.e("row",Integer.toString(row));
-            //Log.e("column",Integer.toString(col));
-
-
             float x = (col + 1) * horizontalSpacing + col * dotSize;
             float y = (row + 1) * verticalSpacing + row * dotSize;
-            //Log.e("x",Float.toString(x));
-            //Log.e("y",Float.toString(y));
 
             if (i < numDots) {
                 dotPaint.setColor(dotColors[i]);
-                //Log.e("color",Integer.toString(dotColors[i]));
                 canvas.drawCircle(x + dotSize / 2, y + dotSize / 2, dotSize / 2, dotPaint);
             } else {
-                // Draw transparent dot (or white dot) to hide excess dots
                 dotPaint.setColor(Color.TRANSPARENT); // Transparent color
                 canvas.drawCircle(x + dotSize / 2, y + dotSize / 2, dotSize / 2, dotPaint);
             }
@@ -76,18 +69,11 @@ public class CustomDotDrawable extends Drawable {
     }
 
     @Override
-    public void setAlpha(int alpha) {
-        // This method is required to implement due to Drawable class, but we can leave it empty
-    }
+    public void setAlpha(int alpha) {}
 
     @Override
-    public void setColorFilter(@Nullable ColorFilter colorFilter) {
-
-    }
+    public void setColorFilter(@Nullable ColorFilter colorFilter) {}
 
     @Override
-    public int getOpacity() {
-        // This method is required to implement due to Drawable class, but we can return a default value
-        return PixelFormat.OPAQUE;
-    }
+    public int getOpacity() {return PixelFormat.OPAQUE;}
 }

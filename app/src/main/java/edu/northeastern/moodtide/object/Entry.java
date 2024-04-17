@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 import java.util.List;
 
+//Entry class represents the a single emotion entry in the app
 public class Entry implements Parcelable {
 
     private String category;

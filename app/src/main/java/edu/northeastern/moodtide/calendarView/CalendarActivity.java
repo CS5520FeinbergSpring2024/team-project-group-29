@@ -46,35 +46,36 @@ import edu.northeastern.moodtide.object.Entry;
 import edu.northeastern.moodtide.object.User;
 import edu.northeastern.moodtide.shapes.CustomDotDrawable;
 
+//Activity to show calendar view and available days with entries
 public class CalendarActivity extends AppCompatActivity {
 
     private CalendarView calendarView;
-    DatabaseReference userRef, dateRef;
-    HashMap<String, HashMap<String, Entry>> record;
-    Set<String> validDates;
-    User user;
-    List<String> daysWithEntry;
+    DatabaseReference userRef;
     List<CalendarDay> calendarDays;
-    LinearLayout calendar, home, analyze;
+    LinearLayout home, analyze;
+    HashMap<String, HashMap<String, Entry>> record;
+    User user;
+    Set<String> validDates;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
-        calendarView = findViewById(R.id.calendarView);
+
+        //Retrieve user's data
         String uid = getSharedPreferences("memory", Context.MODE_PRIVATE).getString("uid", "");
         userRef = FirebaseDatabase.getInstance().getReference(uid);
         getUser();
 
+        //Set up calendarView and onClick to open the entries of the day
+        calendarView = findViewById(R.id.calendarView);
         calendarView.setOnCalendarDayClickListener(new OnCalendarDayClickListener() {
             @Override
             public void onClick(@NonNull CalendarDay calendarDay) {
                 Calendar clickedCalendar = calendarDay.getCalendar();
-                Log.e("calendar", "1");
                 String formattedDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                         .format(clickedCalendar.getTime());
-                Log.e("calendar", formattedDate);
                 List<Entry> entries = getEntries(formattedDate);
                 if(entries!=null){
                     showEntryDialog(entries, formattedDate);
@@ -82,7 +83,7 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
 
-        // click to change color of icon and text
+        //Change the color of icon and text to signify the current page
         Drawable drawable = ContextCompat.getDrawable(this, R.drawable.calendar);
         drawable.setColorFilter(ContextCompat.getColor(this, R.color.ocean_theme), android.graphics.PorterDuff.Mode.SRC_IN);
         ImageView calendarIcon = findViewById(R.id.calendar_icon);
@@ -90,6 +91,7 @@ public class CalendarActivity extends AppCompatActivity {
         TextView calendarTitle = findViewById(R.id.calendar_title);
         calendarTitle.setTextColor(getColor(R.color.ocean_theme));
 
+        //Handled onClick events to navigate to other activities
         home = findViewById(R.id.home_container);
         home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +101,6 @@ public class CalendarActivity extends AppCompatActivity {
             }
         });
 
-        // analyze activity
         analyze = findViewById(R.id.stats_container);
         analyze.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,8 +111,8 @@ public class CalendarActivity extends AppCompatActivity {
         });
     }
 
+    //Method to retrieve user data from database and fill the calendar grid with corresponding icons
     public void getUser() {
-
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -127,6 +128,7 @@ public class CalendarActivity extends AppCompatActivity {
         });
     }
 
+    //Method to loop through dates with entries and gather calendarDays with icons to show on the calendar
     public void drawIcons() {
 
         calendarDays = new ArrayList<>();
@@ -136,6 +138,8 @@ public class CalendarActivity extends AppCompatActivity {
         calendarView.setCalendarDays(calendarDays);
 
     }
+
+    //Method to draw the corresponding icon for each day based on the categories of emotions in the day' entries
     public void drawIcon(String date){
         List<Entry> entries = getEntries(date);
         Set<Integer> colors = new HashSet<>();
@@ -185,7 +189,7 @@ public class CalendarActivity extends AppCompatActivity {
         }
     }
 
-
+    //Method to get the day's entries from the database
     private List<Entry> getEntries(String date){
 
         if(!record.containsKey(date)){return null;}
@@ -194,19 +198,20 @@ public class CalendarActivity extends AppCompatActivity {
             return entries;
         }
     }
+
+    //Method to show the entry dialog with option to turn to next or previous page if applicable
     private void showEntryDialog(List<Entry> entries, String date) {
         // Inflate custom layout for the dialog
         EntryDialog dialogFragment = new EntryDialog();
         Log.e("calendar", "view");
 
-        // Find views within the custom layout
+        // pass the data to the custom dialog class
         Bundle args = new Bundle();
         ArrayList<? extends Parcelable> parcelableList = new ArrayList<>(entries);
 
         args.putParcelableArrayList("entries",parcelableList);
         args.putString("date", date);
         dialogFragment.setArguments(args);
-        Log.e("calendar", date);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         dialogFragment.show(fragmentManager, "EntryDialog");

@@ -21,6 +21,9 @@ import edu.northeastern.moodtide.R;
 import edu.northeastern.moodtide.object.Entry;
 import edu.northeastern.moodtide.object.Trigger;
 
+
+//Customized dialog fragment class
+//that shows the entry dialog with option to turn to next or previous page if applicable
 public class EntryDialog extends DialogFragment {
 
     private TextView category, emotion, triggers, note, index;
@@ -30,7 +33,7 @@ public class EntryDialog extends DialogFragment {
     private int currentIndex=0;
 
 
-    // Override onCreateDialog to customize the dialog appearance and behavior
+    //customize the dialog appearance and behavior
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -79,25 +82,20 @@ public class EntryDialog extends DialogFragment {
         return builder.create();
     }
 
+    //method to help print the list of triggers into strings
     public static String printTriggers(List<Trigger> triggers) {
         StringBuilder combinedNames = new StringBuilder();
-
-        // Iterate through the list of Trigger objects
         for (int i = 0; i < triggers.size(); i++) {
             Trigger trigger = triggers.get(i);
-
-            // Append the trigger name to the StringBuilder
             combinedNames.append(trigger.getName());
-
-            // Append a separator and space if it's not the last trigger
             if (i < triggers.size() - 1) {
                 combinedNames.append(" | ");
             }
         }
-
         return combinedNames.toString();
     }
 
+    //method to print the current entry onto the dialog components and update page count accordingly
     private void fillEntry(Entry entry){
 
         category.setText(entry.getCategory());

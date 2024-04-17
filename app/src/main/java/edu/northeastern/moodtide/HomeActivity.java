@@ -48,11 +48,10 @@ import edu.northeastern.moodtide.viewModel.StreakViewModelFactory;
 import edu.northeastern.moodtide.viewModel.TodayCountViewModel;
 import edu.northeastern.moodtide.viewModel.TodayCountViewModelFactory;
 
+//Home page
 public class HomeActivity extends AppCompatActivity {
 
-    LinearLayout calendar, home, analyze;
-    TextView homeTitle;
-    ImageView homeIcon;
+    LinearLayout calendar, analyze;
     DatabaseReference userRef, timeRef;
     int selectedHour, selectedMinute;
     String savedTime ="null";
@@ -63,18 +62,15 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
+        //Connect database of the current base
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         String uid = getSharedPreferences("memory", Context.MODE_PRIVATE).getString("uid", "");
         Log.e("UID", uid);
         userRef = database.getReference(uid);
 
-
         // fingerprint animation
         ImageView fingerprint = findViewById(R.id.fingerprintImage);
         fingerprint.animate().alpha(0.5f).setDuration(500);
-
-
 
         // display daily quote
         Thread thread = new Thread(new GetQuote(this));
@@ -100,9 +96,6 @@ public class HomeActivity extends AppCompatActivity {
         ImageView imageView = todayCountCard.findViewById(R.id.streakText);
         imageView.setImageResource(R.drawable.emotion_today_text);
 
-//        TextView cardTextView = todayCountCard.findViewById(R.id.streakText);
-//        cardTextView.setText("emotions today");
-
         TodayCountViewModelFactory todayCountViewModelFactory = new TodayCountViewModelFactory(uid);
         TodayCountViewModel todayCountViewModel = new TodayCountViewModel(uid);
         todayCountViewModel.getTodayCount().observe(this, todayCount ->{
@@ -110,8 +103,7 @@ public class HomeActivity extends AppCompatActivity {
             updateTodayCountUI(todayCount);
         });
 
-
-        // add entry when clicking "+"
+        //Change the color of icon and text to signify the current page
         Drawable drawable = ContextCompat.getDrawable(this, R.drawable.home);
         drawable.setColorFilter(ContextCompat.getColor(this, R.color.ocean_theme), android.graphics.PorterDuff.Mode.SRC_IN);
         ImageView homeIcon = findViewById(R.id.home_icon);
@@ -119,7 +111,7 @@ public class HomeActivity extends AppCompatActivity {
         TextView homeTitle = findViewById(R.id.home_title);
         homeTitle.setTextColor(getColor(R.color.ocean_theme));
 
-        // calendar activity
+        //Handle onClick events to navigate to other pages
         calendar = findViewById(R.id.calendar_container);
         calendar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,8 +120,6 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        // analyze activity
         analyze = findViewById(R.id.stats_container);
         analyze.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,41 +139,39 @@ public class HomeActivity extends AppCompatActivity {
         TextView todayCountTextView = todayCountCard.findViewById(R.id.streakCount);
         todayCountTextView.setText(todayCount);
     }
+
+    //check notification permission when initialized and set up notification
     protected void onStart(){
         super.onStart();
-        //check for notification permission
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
                     != PackageManager.PERMISSION_GRANTED) {
-                Log.e("NOTI","ask for permission");
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.POST_NOTIFICATIONS},
                         PERMISSION_REQUEST_POST_NOTIFICATIONS);
             }else{
-                Log.e("NOTI","permission already granted");
-//                getNotificationTime();
+                getNotificationTime();
             }
         }else{
-            Log.e("NOTI","no need to ask for permission");
-//            getNotificationTime();
+            getNotificationTime();
         }
     }
 
+    //handle action when permission is granted
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == PERMISSION_REQUEST_POST_NOTIFICATIONS) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.e("NOTI","ask for permission successful");
                 getNotificationTime();
             } else {
-                // Permission denied, inform the user
                 Toast.makeText(this, "You will not be receiving your daily reminder", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
+    //method to retrieve notification time from database or ask for user when not initialized
     public void getNotificationTime(){
 
         timeRef = userRef.child("notificationTime");
@@ -191,14 +179,12 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 savedTime = dataSnapshot.getValue(String.class);
-                Log.e("TIME",savedTime);
                 if(savedTime.equals("null")){
-                    CustomTimePickerDialog.show(getApplicationContext(), new CustomTimePickerDialog.OnTimeSetListener() {
+                    CustomTimePickerDialog.show(HomeActivity.this, new CustomTimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(int hours, int minutes) {
                             selectedHour = hours;
                             selectedMinute = minutes;
-                            Log.e("TIME",selectedHour+" : "+selectedMinute);
                             timeRef.setValue(selectedHour+":"+selectedMinute);
                             setUpNotification(selectedHour, selectedMinute);
                         }
@@ -215,6 +201,7 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    //method to set up notification timer and call the notification receiver class to send out and schedule further notifications
     public void setUpNotification(int hour, int minute){
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent notificationIntent = new Intent(this, NotificationReceiver.class);
@@ -225,11 +212,8 @@ public class HomeActivity extends AppCompatActivity {
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
         if (calendar.getTimeInMillis() <= System.currentTimeMillis()) {
-            // If in the past, add one day to the calendar
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
-        Log.e("NOTI", calendar.toString());
-
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),pendingIntent);
     }
 }

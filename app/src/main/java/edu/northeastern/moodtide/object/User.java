@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+//User class represents the data of a single user of the app
 public class User {
 
     private String id;

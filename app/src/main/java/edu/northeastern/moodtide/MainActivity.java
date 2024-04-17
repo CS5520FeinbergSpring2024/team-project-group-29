@@ -40,6 +40,7 @@ import edu.northeastern.moodtide.object.Trigger;
 import edu.northeastern.moodtide.object.User;
 
 
+//Log in page
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -47,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText emailInput, passwordInput;
     private TextView reset;
     private String email, password, savedEmail, savedPassword;
-
     private DatabaseReference usersRef= FirebaseDatabase.getInstance().getReference();
     
 
@@ -57,8 +57,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //set up notification channel
         NotificationHelper.createNotificationChannel(this);
 
+        //set up log in interface
+        //retrieve saved email and password if available
         emailInput = findViewById(R.id.emailEditText);
         passwordInput = findViewById(R.id.passwordEditText);
         SharedPreferences sharedPreferences = getSharedPreferences("memory", Context.MODE_PRIVATE);
@@ -67,14 +70,14 @@ public class MainActivity extends AppCompatActivity {
         if(!TextUtils.isEmpty(savedEmail)){emailInput.setText(savedEmail);}
         if(!TextUtils.isEmpty(savedPassword)){passwordInput.setText(savedPassword);}
 
-
         signUp = findViewById(R.id.signUpButton);
         signIn = findViewById(R.id.signInButton);
         reset = findViewById(R.id.resetPassword);
 
-
+        //connect to firebase authentication
         mAuth = FirebaseAuth.getInstance();
 
+        //handle button clicks for different methods
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {signInUser();}
@@ -97,10 +100,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    
 
-
-
+    //method to check for credentials and sign in user
     private void signInUser(){
         email = emailInput.getText().toString().trim();
         password = passwordInput.getText().toString().trim();
@@ -115,10 +116,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
                             String uid = user.getUid();
-                            // Get SharedPreferences instance
                             SharedPreferences sharedPreferences = getSharedPreferences("memory", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.putString("uid", uid);
@@ -129,20 +128,18 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                             startActivity(intent);
                         } else {
-                            // Handle specific exceptions
                             Exception e = task.getException();
-                            //Log.e("SignIn", "Sign-in failed: " + e.getMessage());
                             if (e instanceof FirebaseAuthInvalidCredentialsException) {
                                 Toast.makeText(MainActivity.this, "Invalid email or password.", Toast.LENGTH_SHORT).show();
                             } else {
-                                // General error, handle accordingly
                                 Toast.makeText(MainActivity.this, "Sign-in failed", Toast.LENGTH_SHORT).show();
-                                // You can display a generic error message or perform additional error handling
                             }
                         }
                     }
                 });
     }
+
+    //method to check for credentials and sign up new user
     private void signUpUser(){
         email = emailInput.getText().toString().trim();
         password = passwordInput.getText().toString().trim();
@@ -158,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
                             String uid = user.getUid();
-                            // predefined triggers
                             List<Trigger> myTriggers = new ArrayList<>();
                             myTriggers.add(new Trigger("Food"));
                             myTriggers.add(new Trigger("Friend"));
@@ -172,40 +168,25 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
 
                         } else {
-                            // Handle specific exceptions
                             Exception e = task.getException();
                             if (e instanceof FirebaseAuthUserCollisionException) {
-                                // Email already exists, handle accordingly
                                 Toast.makeText(MainActivity.this, "Account exists with this email address.", Toast.LENGTH_SHORT).show();
-                                // You can navigate to a login screen or display an error message to the user
                             } else {
-                                // General error, handle accordingly
                                 Toast.makeText(MainActivity.this, "Failed to create user.", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
                 });
     }
+    //method to send a password reset email to the user through firebase authentication
     private void forgotPassword(String email) {
         mAuth.sendPasswordResetEmail(email)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        // Password reset email sent successfully
                         Toast.makeText(MainActivity.this, "Password reset email sent", Toast.LENGTH_SHORT).show();
                     } else {
-                        // Password reset email failed to send
                         Toast.makeText(MainActivity.this, "Failed to send password reset email", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
-//
-//    private void showSnackbar(String message) {
-//        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show();
-//    }
-//
-//    private void showSnackbarWithAction(String message, String actionText, View.OnClickListener listener) {
-//        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
-//                .setAction(actionText, listener)
-//                .show();
-//    }
 }

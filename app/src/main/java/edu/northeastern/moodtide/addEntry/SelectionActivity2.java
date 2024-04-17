@@ -26,6 +26,7 @@ public class SelectionActivity2 extends AppCompatActivity implements CircleMain.
     ImageButton backBtn, next;
     CardView card;
 
+    //Customized shape, color and text information of the six different categories
     private static final int NUM_ANGER = 10, NUM_JOY = 16, NUM_LOVE = 10, NUM_SURPRISE = 10, NUM_SADNESS = 12, NUM_FEAR = 10;
     private static final int[] COLORS_ANGER = {R.color.pink1, R.color.pink2,R.color.pink3,R.color.pink4,
             R.color.pink5,R.color.pink6, R.color.pink7, R.color.pink8, R.color.pink9, R.color.pink10};
@@ -58,6 +59,7 @@ public class SelectionActivity2 extends AppCompatActivity implements CircleMain.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selection2);
 
+        //Set up back button and header
         backBtn=(ImageButton)findViewById(R.id.button_back_arrow);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +70,7 @@ public class SelectionActivity2 extends AppCompatActivity implements CircleMain.
         currentStep=(TextView)findViewById(R.id.text_current_step);
         currentStep.setText("2");
 
+        //Set up emotion explanation card view with the forward button embedded
         card = (CardView)findViewById(R.id.emotionCardView);
         title = (TextView) findViewById(R.id.titleTextView);
         explanation = (TextView) findViewById(R.id.explanationTextView);
@@ -84,6 +87,7 @@ public class SelectionActivity2 extends AppCompatActivity implements CircleMain.
         });
         card.setVisibility(View.INVISIBLE);
 
+        //Set up current wheel status based on the category selected from previous page
         currentCategory = getIntent().getStringExtra("category");
 
         switch(currentCategory){
@@ -116,6 +120,8 @@ public class SelectionActivity2 extends AppCompatActivity implements CircleMain.
         }
 
     }
+
+    //Handled configuration change
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -130,6 +136,8 @@ public class SelectionActivity2 extends AppCompatActivity implements CircleMain.
             current.onRestoreInstanceState(savedInstanceState.getParcelable("circleViewState"));
         }
     }
+
+    //method to draw the wheel
     private void drawPlate(int count, int[] colors, String[] texts){
         current = new CircleMain(this, count, colors, texts);
         ConstraintLayout constraintLayout = findViewById(R.id.selection_sub);
@@ -137,6 +145,7 @@ public class SelectionActivity2 extends AppCompatActivity implements CircleMain.
         current.setOnSectorSelectedListener(this);
     }
 
+    //method to show associated explanation when a sector is selected
     @Override
     public void onSectorSelected(int sectorIndex, String sectorTitle, int selectedColor) {
         if(sectorIndex==-1){

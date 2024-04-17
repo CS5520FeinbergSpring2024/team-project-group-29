@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
+//class to create the notification channel
 public class NotificationHelper {
 
     public static final String CHANNEL_ID = "255DAILY";

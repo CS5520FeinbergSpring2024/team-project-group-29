@@ -18,8 +18,6 @@ public class SelectionActivity extends AppCompatActivity {
     ImageButton backBtn, forwardBtn;
     CircleMain mainSelect;
     TextView currentStep;
-    View topBar;
-
     private static final int NUM_SECTORS = 6;
     private static final int[] SECTOR_COLORS = {R.color.pink_theme, R.color.orange_theme,R.color.yellow_theme,R.color.green_theme,R.color.aqua_theme,R.color.ocean_theme};
     private static final String[] SECTOR_TITLES = {"Anger", "Fear", "Love", "Joy", "Surprise", "Sadness"};
@@ -29,8 +27,7 @@ public class SelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selection);
 
-        //topBar = findViewById(R.id.selection_top);
-
+        //Set up back button and header
         backBtn=(ImageButton)findViewById(R.id.button_back_arrow);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,10 +39,12 @@ public class SelectionActivity extends AppCompatActivity {
         currentStep.setText("1");
         forwardBtn=(ImageButton)findViewById(R.id.button_forward);
 
+        //Set up the main selection wheel
         mainSelect = new CircleMain(this, NUM_SECTORS, SECTOR_COLORS,SECTOR_TITLES);
         ConstraintLayout constraintLayout = findViewById(R.id.selection_main);
         constraintLayout.addView(mainSelect);
 
+        //Set up forward button and handled exceptions
         forwardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,6 +67,7 @@ public class SelectionActivity extends AppCompatActivity {
         finish();
     }
 
+    //Handled configuration change
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

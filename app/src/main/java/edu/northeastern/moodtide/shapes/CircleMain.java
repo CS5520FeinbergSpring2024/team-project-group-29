@@ -13,6 +13,8 @@ import android.view.View;
 
 import androidx.core.content.ContextCompat;
 
+
+//Customized spinnable circle shape for selection activities
 public class CircleMain extends View {
 
     private int numSectors;
@@ -37,28 +39,14 @@ public class CircleMain extends View {
         init();
     }
 
-    public CircleMain(Context context, AttributeSet attrs, int numSectors, int[] sectorColors) {
-        super(context, attrs);
-        this.numSectors = numSectors;
-        this.sectorColors = sectorColors;
-        init();
-    }
-
-    public CircleMain(Context context, AttributeSet attrs, int defStyle, int numSectors, int[] sectorColors) {
-        super(context, attrs, defStyle);
-        this.numSectors = numSectors;
-        this.sectorColors = sectorColors;
-        init();
-    }
-
     private void init() {
         paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
 
         textPaint = new Paint();
         textPaint.setColor(Color.BLACK);
-        textPaint.setTextSize(45); // Set text size as needed
-        textPaint.setTextAlign(Paint.Align.CENTER); // Set text alignment
+        textPaint.setTextSize(45);
+        textPaint.setTextAlign(Paint.Align.CENTER);
     }
 
     @Override
@@ -108,6 +96,7 @@ public class CircleMain extends View {
         return angle;
     }
 
+    //handle onTouchEvent to show rotational status and selected sector
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
@@ -184,22 +173,18 @@ public class CircleMain extends View {
         setRotation(angle);
     }
 
+    //handled configuration change
     public void setSelectedSectorIndex(int index) {
-        // Implement logic to set the selected sector index
         selectedSectorIndex = index;
         sectorTitle=sectorTexts[selectedSectorIndex];
         selectedColor=sectorColors[selectedSectorIndex];
-        invalidate(); // Trigger redraw with updated selection
+        invalidate();
     }
-
     @Override
     public Parcelable onSaveInstanceState() {
         Bundle bundle = new Bundle();
-        // Save the rotation angle
         bundle.putFloat("rotationAngle", getCurrentRotationAngle());
-        // Save the selected sector index
         bundle.putInt("selectedSectorIndex", getSelection());
-        // Save the super state
         bundle.putParcelable("superState", super.onSaveInstanceState());
         return bundle;
     }
@@ -207,11 +192,8 @@ public class CircleMain extends View {
     public void onRestoreInstanceState(Parcelable state) {
         if (state instanceof Bundle) {
             Bundle bundle = (Bundle) state;
-            // Restore the super state
             super.onRestoreInstanceState(bundle.getParcelable("superState"));
-            // Restore the rotation angle
             setRotationAngle(bundle.getFloat("rotationAngle"));
-            // Restore the selected sector index
             setSelectedSectorIndex(bundle.getInt("selectedSectorIndex"));
             if (listener != null) {
                 listener.onSectorSelected(selectedSectorIndex, sectorTitle, selectedColor);
