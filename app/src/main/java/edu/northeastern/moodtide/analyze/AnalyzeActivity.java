@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -98,10 +99,16 @@ public class AnalyzeActivity extends AppCompatActivity {
 
         // spinner to select which month
         Spinner monthSpinner = findViewById(R.id.month_spinner);
+        // set the view for the item of spinner
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, getResources().getStringArray(R.array.months_array));
+        adapter.setDropDownViewResource(R.layout.spinner_item);
+        monthSpinner.setAdapter(adapter);
         // set the default selected month to current month
         Calendar calendar = Calendar.getInstance();
         int currentMonthIndex = calendar.get(Calendar.MONTH); // January is 0, December is 11
         monthSpinner.setSelection(currentMonthIndex);
+
+
         monthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

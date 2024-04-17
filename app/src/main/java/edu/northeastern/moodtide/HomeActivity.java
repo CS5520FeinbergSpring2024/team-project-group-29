@@ -161,11 +161,11 @@ public class HomeActivity extends AppCompatActivity {
                         PERMISSION_REQUEST_POST_NOTIFICATIONS);
             }else{
                 Log.e("NOTI","permission already granted");
-                getNotificationTime();
+//                getNotificationTime();
             }
         }else{
             Log.e("NOTI","no need to ask for permission");
-            getNotificationTime();
+//            getNotificationTime();
         }
     }
 
