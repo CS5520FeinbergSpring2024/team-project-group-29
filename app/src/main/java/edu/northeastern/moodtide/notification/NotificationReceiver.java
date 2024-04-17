@@ -20,7 +20,7 @@ public class NotificationReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "255DAILY")
-                .setSmallIcon(R.drawable.home)
+                .setSmallIcon(R.drawable.icon_transparent)
                 .setContentTitle("How are you feeling")
                 .setContentText("Don't forget to log your emotions today")
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
