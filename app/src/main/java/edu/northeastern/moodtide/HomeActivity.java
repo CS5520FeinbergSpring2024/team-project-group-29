@@ -112,14 +112,12 @@ public class HomeActivity extends AppCompatActivity {
 
 
         // add entry when clicking "+"
-        home = findViewById(R.id.home_container);
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, SelectionActivity.class);
-                startActivity(intent);
-            }
-        });
+        Drawable drawable = ContextCompat.getDrawable(this, R.drawable.home);
+        drawable.setColorFilter(ContextCompat.getColor(this, R.color.ocean_theme), android.graphics.PorterDuff.Mode.SRC_IN);
+        ImageView homeIcon = findViewById(R.id.home_icon);
+        homeIcon.setImageDrawable(drawable);
+        TextView homeTitle = findViewById(R.id.home_title);
+        homeTitle.setTextColor(getColor(R.color.ocean_theme));
 
         // calendar activity
         calendar = findViewById(R.id.calendar_container);
