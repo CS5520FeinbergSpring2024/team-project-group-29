@@ -26,7 +26,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/app_name"
-        android:text="MoodTide"
+        android:text="@string/app_name"
         android:textSize="25dp"
         android:layout_gravity="center"
         android:textColor="@color/black"/>
