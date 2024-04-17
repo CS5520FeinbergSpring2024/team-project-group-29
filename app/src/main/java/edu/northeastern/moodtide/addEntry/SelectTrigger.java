@@ -188,9 +188,10 @@ public class SelectTrigger extends AppCompatActivity {
                                 // change the color of the border
                                 background.setStroke(3, getResources().getColor(R.color.selected_trigger_highlighted_border)); // New border color
                             } else {
+                                isHighlighted[0] = false;
                                 selectedTriggers.remove(triggerList.get(index));
                                 Log.d("REMOVED TRIGGER", triggerList.get(index).getName());
-                                background.setStroke(3, Color.BLACK); // New border color
+                                background.setStroke(3, currentColor); // New border color
                             }
 
 
