@@ -13,7 +13,7 @@ public class NetworkUtils {
 
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         urlConnection.setRequestMethod("GET");
-        urlConnection.setRequestProperty("X-RapidAPI-Key", "97f883113fmsh2bb288b45a62afap1b4269jsn6bf9531b3c53");
+        urlConnection.setRequestProperty("X-RapidAPI-Key", "a8a75b3734mshbdb1bb5ffb9b062p1c98f7jsn40ad084fd0cd");
         urlConnection.setRequestProperty("X-RapidAPI-Host", "positivity-tips.p.rapidapi.com");
         urlConnection.setDoInput(true);
         urlConnection.connect();
