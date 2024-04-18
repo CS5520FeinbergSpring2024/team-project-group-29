@@ -5,7 +5,8 @@
         <item name="colorPrimary">@color/ocean_theme</item>
         <item name="colorPrimaryDark">@color/ocean_theme</item>
         <item name="colorAccent">@color/aqua_theme</item>
-        <item name="android:windowBackground">#FFFFFF</item> <!-- Set the background color here -->
+        <item name="backgroundColor">@color/white</item>
+        <item name="android:windowBackground">@color/white</item> <!-- Set the background color here -->
     </style>
 
     <!-- Style for TriggerTextViews with a border. -->

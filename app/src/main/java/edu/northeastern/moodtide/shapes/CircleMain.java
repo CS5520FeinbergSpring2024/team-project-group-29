@@ -45,7 +45,11 @@ public class CircleMain extends View {
 
         textPaint = new Paint();
         textPaint.setColor(Color.BLACK);
-        textPaint.setTextSize(45);
+        if(numSectors>6){
+            textPaint.setTextSize(25);
+        }else{
+            textPaint.setTextSize(30);
+        }
         textPaint.setTextAlign(Paint.Align.CENTER);
     }
 
@@ -70,8 +74,8 @@ public class CircleMain extends View {
             canvas.drawArc(centerX - radius, centerY - radius, centerX + radius, centerY + radius, i * angle, angle, true, paint);
             // Draw text
             float textAngle = i * angle + angle / 2; // Center text in the sector
-            float x = (float) (centerX + (radius * 0.6) * Math.cos(Math.toRadians(textAngle))); // Adjust radius for text positioning
-            float y = (float) (centerY + (radius * 0.6) * Math.sin(Math.toRadians(textAngle))); // Adjust radius for text positioning
+            float x = (float) (centerX + (radius * 0.65) * Math.cos(Math.toRadians(textAngle))); // Adjust radius for text positioning
+            float y = (float) (centerY + (radius * 0.65) * Math.sin(Math.toRadians(textAngle))); // Adjust radius for text positioning
             canvas.save(); // Save canvas state
             canvas.rotate(textAngle, x, y); // Rotate canvas by the desired angle
             canvas.drawText(sectorTexts[i % sectorTexts.length], x, y, textPaint); // Draw text
