@@ -45,11 +45,7 @@ public class CircleMain extends View {
 
         textPaint = new Paint();
         textPaint.setColor(Color.BLACK);
-        if(numSectors>6){
-            textPaint.setTextSize(25);
-        }else{
-            textPaint.setTextSize(30);
-        }
+        textPaint.setTextSize(40);
         textPaint.setTextAlign(Paint.Align.CENTER);
     }
 
