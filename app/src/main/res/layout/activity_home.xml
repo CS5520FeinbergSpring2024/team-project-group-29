@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity">
+
+    <TextView
+        android:id="@+id/text_welcome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Welcome!"
+        android:textSize="20sp"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintBottom_toTopOf="@+id/fingerprintImage"
+        />
+    <edu.northeastern.moodtide.welcome.FingerPrintImageView
+        android:id="@+id/fingerprintImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/fingerprint_colored"
+        android:layout_centerInParent="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/layout_card"
+        app:layout_constraintTop_toBottomOf="@+id/text_welcome"
+        app:layout_constraintVertical_bias="1"/>
+    <LinearLayout
+        android:id="@+id/indicator_layout"
+        android:layout_marginBottom="40dp"
+        android:layout_marginStart="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@id/fingerprintImage"
+        app:layout_constraintTop_toTopOf="@+id/fingerprintImage"
+        app:layout_constraintVertical_bias="1"
+        >
+
+        <ImageView
+            android:id="@+id/indicator_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/indicator_text"
+            android:layout_weight="3" />
+
+        <ImageView
+            android:id="@+id/indicator_arrow"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/curved_arrow"
+            android:layout_weight="1" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:visibility="invisible"/>
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/layout_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/fingerprintImage"
+        app:layout_constraintBottom_toTopOf="@+id/nav_main">
+
+        <include
+            android:id="@+id/streak_count_card"
+            layout="@layout/streak_card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginBottom="10dp"
+            android:layout_margin="10dp">
+
+        </include>
+        <include
+            android:id="@+id/today_count_card"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            layout="@layout/streak_card"
+            android:layout_marginBottom="10dp"
+            android:layout_margin="10dp">
+        </include>
+
+    </LinearLayout>
+
+
+    <include
+        android:id="@+id/nav_main"
+        layout="@layout/bottom_nav_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

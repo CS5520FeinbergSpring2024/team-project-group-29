@@ -5,29 +5,99 @@
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
     android:gravity="center"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
 
-        <TextView
-            android:id="@+id/nav_calendar"
+        <View
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="Calendar" />
+            android:visibility="invisible"/>
 
-        <ImageView
-            android:id="@+id/nav_home"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/plus"
-            android:title="Home" />
+        <LinearLayout
+            android:id="@+id/calendar_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/nav_stat"
+                <ImageView
+                    android:id="@+id/calendar_icon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/calendar"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/calendar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Calendar" />
+
+        </LinearLayout>
+
+        <View
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="Analysis" />
+            android:visibility="invisible"/>
+
+        <LinearLayout
+            android:id="@+id/home_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/home_icon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/home"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/home_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:text="Home" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="invisible"/>
+
+        <LinearLayout
+            android:id="@+id/stats_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/analyze_icon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/stats"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:id="@+id/analyze_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Analyze" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="invisible"/>
 
 </LinearLayout>

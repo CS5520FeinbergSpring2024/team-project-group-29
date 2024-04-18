@@ -2,4 +2,86 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="orange_theme">#F4B59D</color>
+    <color name="orange1">#f9d49c</color>
+    <color name="orange2">#f0c291</color>
+    <color name="orange3">#e8b187</color>
+    <color name="orange4">#dfa07d</color>
+    <color name="orange5">#d78f73</color>
+    <color name="orange6">#dd9a7a</color>
+    <color name="orange7">#e2a681</color>
+    <color name="orange8">#e8b187</color>
+    <color name="orange9">#edbd8e</color>
+    <color name="orange10">#f3c895</color>
+
+    <color name="yellow_theme">#F5EE9B</color>
+    <color name="yellow1">#faf5c9</color>
+    <color name="yellow2">#f9eec3</color>
+    <color name="yellow3">#f7e7be</color>
+    <color name="yellow4">#f6e0b8</color>
+    <color name="yellow5">#f4d9b3</color>
+    <color name="yellow6">#f3d2ad</color>
+    <color name="yellow7">#f4d9b3</color>
+    <color name="yellow8">#f6e0b8</color>
+    <color name="yellow9">#f7e7be</color>
+    <color name="yellow10">#f9eec3</color>
+
+    <color name="green_theme">#C3DEA7</color>
+    <color name="green1">#f3f3cb</color>
+    <color name="green2">#ecf0c7</color>
+    <color name="green3">#e5edc4</color>
+    <color name="green4">#deeac0</color>
+    <color name="green5">#d8e7bd</color>
+    <color name="green6">#d1e4ba</color>
+    <color name="green7">#cae2b6</color>
+    <color name="green8">#c3dfb3</color>
+    <color name="green9">#bddcaf</color>
+    <color name="green10">#b6d9ac</color>
+    <color name="green11">#bfddb0</color>
+    <color name="green12">#c7e0b5</color>
+    <color name="green13">#d0e4b9</color>
+    <color name="green14">#d9e8be</color>
+    <color name="green15">#e1ebc2</color>
+    <color name="green16">#eaefc6</color>
+
+    <color name="aqua_theme">#BBE2E4</color>
+    <color name="aqua1">#d3e8df</color>
+    <color name="aqua2">#cfe6e0</color>
+    <color name="aqua3">#cbe5e2</color>
+    <color name="aqua4">#c8e3e3</color>
+    <color name="aqua5">#c4e2e5</color>
+    <color name="aqua6">#c0e0e6</color>
+    <color name="aqua7">#c4e2e5</color>
+    <color name="aqua8">#c8e3e3</color>
+    <color name="aqua9">#cbe5e2</color>
+    <color name="aqua10">#cfe6e0</color>
+
+    <color name="ocean_theme">#B4BBE0</color>
+    <color name="ocean1">#d0e0eb</color>
+    <color name="ocean2">#cbd9e8</color>
+    <color name="ocean3">#c6d3e6</color>
+    <color name="ocean4">#c2cce4</color>
+    <color name="ocean5">#bdc6e1</color>
+    <color name="ocean6">#b8bfdf</color>
+    <color name="ocean7">#b4b9dc</color>
+    <color name="ocean8">#afb2da</color>
+    <color name="ocean9">#b6bbdd</color>
+    <color name="ocean10">#bcc4e1</color>
+    <color name="ocean11">#c3cde4</color>
+    <color name="ocean12">#c9d6e7</color>
+
+    <color name="pink_theme">#E793B5</color>
+    <color name="pink1">#c2a4c1</color>
+    <color name="pink2">#cfa5c4</color>
+    <color name="pink3">#dba6c7</color>
+    <color name="pink4">#e7a8c9</color>
+    <color name="pink5">#f3a9cc</color>
+    <color name="pink6">#ffaacf</color>
+    <color name="pink7">#f3a9cc</color>
+    <color name="pink8">#e7a8c9</color>
+    <color name="pink9">#dba6c7</color>
+    <color name="pink10">#cfa5c4</color>
+
+    <color name="selected_trigger_highlighted_border">#D3D3D3</color>
 </resources>

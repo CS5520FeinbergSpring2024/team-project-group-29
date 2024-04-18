@@ -1,0 +1,21 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Other theme attributes -->
+        <item name="colorPrimary">@color/ocean_theme</item>
+        <item name="colorPrimaryDark">@color/ocean_theme</item>
+        <item name="colorAccent">@color/aqua_theme</item>
+        <item name="backgroundColor">@color/white</item>
+        <item name="android:windowBackground">@color/white</item> <!-- Set the background color here -->
+    </style>
+
+    <!-- Style for TriggerTextViews with a border. -->
+    <style name="TextViewWithBorder">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/trigger_text_view_border</item>
+        <item name="android:textSize">30dp</item>
+        <item name="android:padding">5dp</item>
+
+    </style>
+</resources>

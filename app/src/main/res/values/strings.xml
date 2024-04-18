@@ -1,3 +1,95 @@
 <resources>
-    <string name="app_name">MoodTide</string>
+    <string name="app_name">TouchTone</string>
+    <string name="resetPassword"><u>Forgot password?</u></string>
+    <string name="test">This is a test string.</string>
+
+    <string name="Revolted">feeling unpleasantly shocked or disgusted</string>
+    <string name="Contemptuous">feeling a combination of anger and disgust</string>
+    <string name="Jealous">feeling or showing envy of someone or their achievements and advantages</string>
+    <string name="Resentful">feeling bitter or angry about something you think is unfair</string>
+    <string name="Aggravated">seriously offended</string>
+    <string name="Annoyed">bothered by something displeasing or uncomfortable</string>
+    <string name="Frustrated">upset because you cannot do something you want to do</string>
+    <string name="Agitated">very troubled and restless</string>
+    <string name="Hostile">being unfriendly or opposed to someone or something</string>
+    <string name="Hateful">intense dislike for something or someone</string>
+
+    <string name="Rapturous">feeling of intense pleasure or joy</string>
+    <string name="Enchanted">filled with delight</string>
+    <string name="Jubilant">being in great joy</string>
+    <string name="Blissful">feeling full of joy</string>
+    <string name="Delighted">feeling lifted by joy</string>
+    <string name="Euphoric">intense happiness and s sense of wellbeing</string>
+    <string name="Zealous">great energy or enthusiasm in pursuit of a cause or an objective</string>
+    <string name="Excited">enthusiastic about something in the future</string>
+    <string name="Hopeful">optimistic that something good will happen</string>
+    <string name="Eager">impatiently wanting to do or get something</string>
+    <string name="Illustrious">well known or famous</string>
+    <string name="Triumphant">achieved something important to you</string>
+    <string name="Jovial">good-humored cheerfulness</string>
+    <string name="Amused">finding something funny or entertaining</string>
+    <string name="Satisfied">pleased with what you have or with something you did</string>
+    <string name="Pleased">feeling content and happy about a particular situation or person</string>
+
+    <string name="Peaceful">quiet and calm; free from disturbance</string>
+    <string name="Relieved">feeling at ease after an unpleasant feeling goes away</string>
+    <string name="Compassionate">showing care and concern for someone</string>
+    <string name="Caring">displaying kindness and concern for others</string>
+    <string name="Infatuated">intense passion or admiration for someone or something</string>
+    <string name="Passionate">intense engagement and commitment to someone or something</string>
+    <string name="Attracted">having a liking for or interest in someone or something</string>
+    <string name="Sentimental">of or prompted by feelings of tenderness, sadness, or nostalgia</string>
+    <string name="Fond">affection or liking for someone or something</string>
+    <string name="Romantic">conducive to or characterized by the expression of love</string>
+
+    <string name="Shocked">experiencing extreme surprise</string>
+    <string name="Stunned">feeling confused or astounded by an event</string>
+    <string name="Disillusioned">disappointed in someone or something that one discovers to be less good than one had believed</string>
+    <string name="Perplexed">completely baffled and puzzled</string>
+    <string name="Astonished">greatly surprised or impressed</string>
+    <string name="Awestruck">very impressed and amazed by something</string>
+    <string name="Speechless">unable to speak as the temporary result of shock or some strong emotion</string>
+    <string name="Astounded">shock or greatly surprise</string>
+    <string name="Stimulated">made excited and interested about something</string>
+    <string name="Touched">being emotionally stirred or moved</string>
+
+    <string name="Agonized">extreme and prolonged pain and suffering</string>
+    <string name="Hurt">mental or emotional distress or anguish</string>
+    <string name="Depressed">extremely unhappy and dispirited</string>
+    <string name="Sorrowful">intense sadness</string>
+    <string name="Dismayed">feelings of alarmed concern or dismay</string>
+    <string name="Displeased">feeling annoyance and displeasure</string>
+    <string name="Regretful">feeling bad when you do something that you wish you had not</string>
+    <string name="Guilty">feeling responsible for a specific wrongdoing</string>
+    <string name="Isolated">feeling like you are cut off from others</string>
+    <string name="Lonely">feeling sad because you are alone or disconnected</string>
+    <string name="Grief">experiencing distress when losing someone or something important</string>
+    <string name="Powerless">feeling of helplessness or inadequacy in stressful situations</string>
+
+    <string name="Dread">anxiety because of expecting something unpleasant or upsetting</string>
+    <string name="Mortified">feeling or showing strong shame or embarrassment</string>
+    <string name="Anxious">worried and uneasy about an uncertain outcome</string>
+    <string name="Worried">troubled about actual or potential problems</string>
+    <string name="Inadequate">feeling that who you are is insufficient or lacking in some way</string>
+    <string name="Inferior">feeling of being less important or valuable</string>
+    <string name="Hysterical">deriving from or affected by uncontrolled extreme emotion</string>
+    <string name="Panic">feeling frantic and overcome by fear and anxiety</string>
+    <string name="Helpless">feeling like there is nothing you can do</string>
+    <string name="Frightened">afraid or fearful</string>
+
+    <string-array name="months_array">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
 </resources>

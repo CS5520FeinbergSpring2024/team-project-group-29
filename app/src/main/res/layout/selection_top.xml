@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/selection_top"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageButton
+        android:id="@+id/button_back_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:contentDescription="back_arrow"
+        android:src="@drawable/back_arrow">
+    </ImageButton>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/text_current_step"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="1"
+            android:textSize="35sp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/text_total_step"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/4"
+            android:textSize="35sp">
+
+        </TextView>
+    </LinearLayout>
+</RelativeLayout>

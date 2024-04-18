@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <Spinner
+            android:id="@+id/month_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/months_array"
+            android:minHeight="48dp"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- ScrollView -->
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@id/nav_main"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fillViewport="true">
+        <LinearLayout
+            android:id="@+id/charts_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"> <!-- Vertical orientation for stacking elements -->
+
+            <!-- Title for Pie Chart -->
+            <TextView
+                android:id="@+id/pie_chart_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="What you feel most"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:padding="16dp" />
+
+            <!-- FrameLayout for Pie Chart -->
+            <FrameLayout
+                android:id="@+id/pie_chart_container"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:padding="8dp">
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pieChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </FrameLayout>
+
+            <!-- Title for Bar Chart -->
+            <TextView
+                android:id="@+id/bar_chart_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="What triggers you"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:padding="16dp" />
+
+            <!-- FrameLayout for Bar Chart -->
+            <FrameLayout
+                android:id="@+id/bar_chart_container"
+                android:layout_width="match_parent"
+                android:layout_height="300dp">
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/barChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </FrameLayout>
+        </LinearLayout>
+    </ScrollView>
+    <include
+        android:id="@+id/nav_main"
+        layout="@layout/bottom_nav_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

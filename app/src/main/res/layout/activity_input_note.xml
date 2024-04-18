@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".addEntry.InputNote">
+    <include
+        layout="@layout/selection_top">
+
+    </include>
+    <TextView
+        android:id="@+id/text_view_note_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Any other thoughts?"
+        android:textSize="30sp"
+        app:layout_constraintTop_toBottomOf="@id/selection_top"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="10dp">
+    </TextView>
+
+    <EditText
+        android:id="@+id/edit_text_note"
+        android:hint="Optional"
+        android:gravity="left"
+        android:padding="10dp"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/trigger_text_view_border"
+        android:minHeight="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_note_question"
+        tools:ignore="SpeakableTextPresentCheck">
+
+    </EditText>
+
+    <ImageButton
+        android:id="@+id/button_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/white"
+        android:src="@drawable/check_mark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="SpeakableTextPresentCheck">
+
+    </ImageButton>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

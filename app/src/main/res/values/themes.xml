@@ -1,8 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.MoodTide" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Base.Theme.MoodTide" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/ocean_theme</item>
+        <item name="colorPrimaryDark">@color/ocean_theme</item>
+        <item name="colorAccent">@color/aqua_theme</item>
+        <item name="backgroundColor">@color/white</item>
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
     <style name="Theme.MoodTide" parent="Base.Theme.MoodTide" />
